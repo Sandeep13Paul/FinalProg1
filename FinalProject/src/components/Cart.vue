@@ -91,7 +91,7 @@
   }
   
   h1 {
-    color: #e64833;
+    color: #4ba35b;
     font-size: 24px;
     margin-bottom: 20px;
   }
