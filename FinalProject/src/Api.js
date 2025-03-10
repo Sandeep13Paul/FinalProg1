@@ -1,5 +1,5 @@
 export const getProducts = () => {
-    // This is just a sample data to simulate the API response
+
     return [
       {
         "id": 1,
