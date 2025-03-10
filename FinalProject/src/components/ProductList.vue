@@ -17,7 +17,7 @@ export default {
     <h2 style="color: #5e402b;">Product List</h2>
     <div class="product-cards">
       <div v-for="product in products" :key="product.id" class="product-card">
-        <router-link :to="'/product-description/' + product.id">
+        <router-link :to="'/product-description/' + product.id" class="product-link">
           <img :src="product.image" alt="Product Image" class="product-image" />
           <h3 class="product-name">{{ product.name }}</h3>
           <p class="product-price">${{ product.price }}</p>
@@ -92,6 +92,11 @@ export default {
   height: auto;
   border-radius: 12px;
   margin-bottom: 20px;
+}
+
+
+.product-link {
+  text-decoration: none;
 }
 
 </style>
