@@ -96,7 +96,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;  /* Center the search bar */
+  width: 50%;
 }
  
 .search-input {
@@ -109,7 +109,7 @@ export default {
 }
  
 .search-button {
-  background-color: #4aad9e; /* Initial green color */
+  background-color: #4aad9e;
   color: white;
   border: none;
   padding: 8px 18px;
@@ -120,7 +120,7 @@ export default {
 }
  
 .search-button:hover {
-  background-color: #f44336; /* Red color when hovered */
+  background-color: #f44336;
   color: white;
   transform: scale(1.05);
 }
@@ -134,7 +134,7 @@ export default {
 }
  
 .cart-profile .nav-button:not(:last-child) {
-  margin-right: 15px; /* Add margin between Cart and Profile buttons */
+  margin-right: 15px;
 }
  
 @media (max-width: 768px) {
