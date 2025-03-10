@@ -1,11 +1,13 @@
 <script>
   import { getProducts } from '../Api.js';
   import { useCartStore } from '../pinia/cartPinia.js';
+  import { useOrderStore } from '../pinia/orderPinia.js';
   
   export default {
     data() {
       return {
         cart: useCartStore(),
+        order: useOrderStore(),
       };
     },
     methods: {
@@ -24,6 +26,8 @@
         return this.cart.totalPrice();
       },
       checkoutButton() {
+        this.order.addOrder(this.cart.cartItems);
+        this.cart.clearCart();
         this.$router.push('/ThankYou');
       },
     },

@@ -1,55 +1,42 @@
 <script>
-  export default {
-    name: 'OrderPage',
-    data() {
-      return {
-        // Dummy order data
-        orders: [
-          {
-            products: [
-              { name: 'Product 1', price: 29.99, quantity: 2 },
-              { name: 'Product 2', price: 49.99, quantity: 1 },
-            ],
-          },
-          {
-            products: [
-              { name: 'Product 3', price: 19.99, quantity: 3 },
-              { name: 'Product 4', price: 99.99, quantity: 1 },
-            ],
-          },
-        ],
-      };
-    },
-    methods: {
-      calculateOrderTotal(order) {
-        return order.products.reduce((total, product) => {
-          return total + product.price * product.quantity;
-        }, 0).toFixed(2);
-      },
-    },
+import { useOrderStore } from '../pinia/orderPinia.js';
+import { computed } from 'vue';
+
+export default {
+  name: 'OrderPage',
+  setup() {
+    const orderStore = useOrderStore();
+    
+    console.log('Order Store:', orderStore.orderItems);
+
+    const orders = orderStore.orderItems;
+
+    console.log(orders.items)
+
+    return { orderStore };
+  }
   };
   </script>
   
   <template>
     <div class="order-page">
       <h1 class="page-heading">Your Orders</h1>
-  
-   
-      <div v-for="(order, index) in orders" :key="index" class="order">
-        <h2 class="order-title">Order #{{ index + 1 }}</h2>
-  
- 
-        <div v-for="(product, prodIndex) in order.products" :key="prodIndex" class="product-item">
+
+      <div v-for="order in orderStore.orderItems" class="order">
+        <h2 class="order-title">Order ID: {{ order.orderId }}</h2>
+
+        <div v-for="product in order.items" :key="product.productName" class="product-item">
           <div class="product-info">
-            <h3>{{ product.name }}</h3>
-            <p>Price: ${{ product.price }}</p>
+            <h3>{{ product.productName }}</h3>
+            <p>Price: ${{ product.productPrice }}</p>
             <p>Quantity: {{ product.quantity }}</p>
-            <p>Total: ${{ (product.price * product.quantity).toFixed(2) }}</p>
+            <p>Merchant Name: {{ product.merchantName }}</p>
+            <p>Total: ${{ (product.productPrice * product.quantity).toFixed(2) }}</p>
           </div>
         </div>
-  
+
         <hr />
-        <p class="order-total">Order Total: ${{ calculateOrderTotal(order) }}</p>
+        <!-- <p class="order-total">Order Total: ${{ calculateOrderTotal(order) }}</p> -->
       </div>
     </div>
   </template>
