@@ -1,38 +1,14 @@
 <script>
   import { getProducts } from '../Api.js';
+  import { useCartStore } from '../pinia/cartPinia.js';
   
   export default {
     data() {
       return {
-        cartItems: [],
+        cart: useCartStore(),
       };
     },
-    created() {
-      this.addProductToCart();
-    },
     methods: {
-      async addProductToCart() {
-        try {
-          const { productId, quantity } = this.$route.query;
-         
-          const allProducts = await getProducts();
-          const product = allProducts.find((product) => product.id === parseInt(productId));
-  
-          if (product) {
-            
-            const existingItem = this.cartItems.find((item) => item.id === product.id);
-            if (existingItem) {
-              
-              existingItem.quantity += parseInt(quantity);
-            } else {
-             
-              this.cartItems.push({ ...product, quantity: parseInt(quantity) });
-            }
-          }
-        } catch (error) {
-          console.error('Error fetching product details:', error);
-        }
-      },
       increaseQuantity(item) {
         item.quantity++;
       },
@@ -42,10 +18,10 @@
         }
       },
       removeItem(itemId) {
-        this.cartItems = this.cartItems.filter((item) => item.id !== itemId);
+        this.cart.removeFromCart(itemId);
       },
       getTotalPrice() {
-        return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+        return this.cart.totalPrice();
       },
       checkoutButton() {
         this.$router.push('/ThankYou');
@@ -57,17 +33,16 @@
 <template>
     <div class="cart-container">
       <h1>Your New Cart</h1>
-      <div v-if="cartItems.length > 0">
-        <div v-for="item in cartItems" :key="item.id" class="cart-item">
+      <div v-if="cart.cartItems.length > 0">
+        <div v-for="item in cart.cartItems" :key="item.id" class="cart-item">
           <img :src="item.image" alt="Product Image" class="cart-item-image" />
           <div class="cart-item-details">
-            <h2>{{ item.name }}</h2>
-            <p>{{ item.description }}</p>
-            <p>Price: ${{ item.price }}</p>
+            <h2>{{ item.productName }}</h2>
+            <p>Price: ${{ item.productPrice }}</p>
             <p>Quantity: {{ item.quantity }}</p>
             <button @click="increaseQuantity(item)">+</button>
             <button @click="decreaseQuantity(item)">-</button>
-            <button @click="removeItem(item.id)">Remove</button>
+            <button @click="removeItem(item.productId)">Remove</button>
           </div>
         </div>
         <div class="total-price">
