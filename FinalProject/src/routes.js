@@ -15,8 +15,7 @@ const routes = [
   {path:'/Thankyou', component:ThankYouPage},
   {path:'/Profile',component:Profile},
   {path:'/ProductSearchList', component:ProductSearchList},
-  {path: '/product-description/:productId', component: ProductDescription}
- 
+  {path: '/product-description/:productId', component: ProductDescription},
 ]
  
 const router = createRouter({

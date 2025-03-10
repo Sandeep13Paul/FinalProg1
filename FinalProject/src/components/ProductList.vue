@@ -20,7 +20,7 @@ export default {
         <router-link :to="'/product-description/' + product.id" class="product-link">
           <img :src="product.image" alt="Product Image" class="product-image" />
           <h3 class="product-name">{{ product.name }}</h3>
-          <p class="product-price">${{ product.price }}</p>
+          <p class="product-price">${{ product.merchantList[0].price }}</p>
           <p class="product-description">{{ product.description }}</p>
           <p class="product-usp">USP: {{ product.usp }}</p>
         </router-link>
