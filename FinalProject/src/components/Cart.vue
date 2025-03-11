@@ -36,7 +36,7 @@
  
 <template>
     <div class="cart-container">
-      <h1 class="cartname">Your New Cart</h1>
+      <h1 class="cartname">Your Cart</h1>
       <div v-if="cart.cartItems.length > 0">
         <div v-for="item in cart.cartItems" :key="item.id" class="cart-item">
           <img :src="item.image" alt="Product Image" class="cart-item-image" />
