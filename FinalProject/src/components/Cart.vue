@@ -63,49 +63,50 @@
   
   <style >
  .cart-container {
-  background-color: #ffffff;
+
+  background-color: #536878; 
   padding: 20px;
   font-family: 'Arial', sans-serif;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 900px; /* Set a max width for the cart container */
-  margin: 40px auto 0; /* Add margin at the top of the container */
+  max-width: 900px; 
+  margin: 40px auto 0; 
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .cartname {
-  color: #4ba35b;
+  color: #ffffff;
   font-size: 24px;
   margin-bottom: 20px;
-  text-align: center; /* Center the cart name */
+  text-align: center;
 }
 
 .cart-item {
-  display: flex; /* Flexbox for horizontal layout */
-  justify-content: flex-start; /* Align items to the left */
-  align-items: center; /* Vertically center the items */
+  display: flex; 
+  justify-content: flex-start; 
+  align-items: center; 
   margin-bottom: 20px;
   border: 1px solid #ddd;
   padding: 20px;
   border-radius: 8px;
   background-color: #f8f8f8;
-  width: 100%; /* Make the cart item take full width of its container */
-  max-width: 900px; /* Optional: Ensure the width doesn't exceed 900px */
-  text-align: left; /* Align the text to the left */
+  width: 100%;
+  max-width: 900px; 
+  text-align: left; 
 }
 
 .cart-item-image {
   width: 120px;
   height: 120px;
   object-fit: cover;
-  margin-right: 20px; /* Space between image and description */
+  margin-right: 20px; 
   border-radius: 8px;
 }
 
 .cart-item-details {
-  flex-grow: 1; /* Allow details to take the remaining space */
+  flex-grow: 1;
 }
 
 .cart-item h2 {
@@ -133,11 +134,11 @@
 
 .cart-item button:hover {
   background-color: #fb9d0d;
-  transform: scale(1.05); /* Slight scaling effect on hover */
+  transform: scale(1.05); 
 }
 
 .cart-item button:active {
-  background-color: #f56b05; /* Darker shade when button is pressed */
+  background-color: #f56b05; 
 }
 
 .total-price {
@@ -145,7 +146,7 @@
   font-weight: bold;
   margin-top: 20px;
   color: #e64833;
-  text-align: center; /* Center the total price */
+  text-align: center; 
 }
 
 button {

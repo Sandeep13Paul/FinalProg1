@@ -23,7 +23,7 @@ export default {
 
 body {
   padding-top: 60px;
-
+  background-color: #EAE0C8;
 }
 
 

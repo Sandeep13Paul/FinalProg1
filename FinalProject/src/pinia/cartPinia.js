@@ -11,17 +11,17 @@ export const useCartStore = defineStore('cart',{
         },
     },
     actions: {
-        addToCart(item, quantity) {
-            console.log(item, quantity);
+        addToCart(item, quantity,productP,merchantN,merchantId) {
+            // console.log("this is in cart went we click add to cart",merchantN);
             if (this.cartItems.length > 0) {
                 const existingItem = this.cartItems.find((items) => items.productId === item.id);
                 if (existingItem) {
                   // don't add the same item again
                 } else {
-                  this.cartItems.push({productId: item.id, productName: item.name, merchantName: item.merchantList[0].name, productPrice: item.merchantList[0].price, quantity: Number(quantity)});
+                  this.cartItems.push({productId: item.id, productName: item.name, merchantName: merchantN, productPrice: productP, quantity: Number(quantity)});
                 }
               } else {
-                this.cartItems.push({productId: item.id, productName: item.name, merchantName: item.merchantList[0].name, productPrice: item.merchantList[0].price, quantity: Number(quantity)});
+                this.cartItems.push({productId: item.id, productName: item.name, merchantName: merchantN, productPrice:productP, quantity: Number(quantity)});
               }
         },
         removeFromCart(productId) {

@@ -1,13 +1,18 @@
 <script>
 import { getProducts } from '../Api.js';
 import { useCartStore } from '../pinia/cartPinia.js';
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 export default {
   name: 'ProductDescription',
   data() {
     return {
       product: null,
-      cart: useCartStore()
+      cart: useCartStore(),
+      productPrice: 0,
+      merchantName: "",  
+      merchantId: "",    
     };
   },
   created() {
@@ -21,15 +26,41 @@ export default {
       try {
         const allProducts = await getProducts();
         this.product = allProducts.find(product => product.id === parseInt(id)) || null;
+        if (this.product) {
+          this.productPrice = this.product.merchantList[0].price;
+          this.merchantName = this.product.merchantList[0].name;
+          this.merchantId = this.product.merchantList[0].id;
+        }
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
     },
-    addToCart(product) {
+   
+    addToCart(product, productPrice, merchantName, merchantId) {
       console.log('Adding product to cart:', product);
-      this.cart.addToCart(product, 1);
-      console.log('Cart:', this.cart.cartItems);
+      console.log("Merchant Name:", merchantName);
+      console.log("Merchant ID:", merchantId);
+      this.$toast.open({
+      message: 'Product added to cart!',
+      type: 'success', // You can change this to 'error' or 'info' based on your use case
+      duration: 3000, // Toast will disappear after 3 seconds
+      position: 'top-right', // Position of the toast
+      dismissible: true, // Allow the user to dismiss the toast manually
+    });
     },
+
+    updateMerchantInfo(event) {
+      const selectedPrice = parseFloat(event.target.value);
+   
+      const selectedMerchant = this.product.merchantList.find(
+        merchant => merchant.price === selectedPrice
+      );
+
+      if (selectedMerchant) {
+        this.merchantName = selectedMerchant.name;
+        this.merchantId = selectedMerchant.id;
+      }
+    }
   }
 };
 </script>
@@ -45,10 +76,23 @@ export default {
 
       <div class="product-info">
         <h2 class="product-name">{{ product.name }}</h2>
-        <p class="product-price">${{ product.merchantList[0].price }}</p>
+        <p class="product-price">${{ productPrice }}</p>
         <p class="product-description-text">{{ product.description }}</p>
         <p class="product-usp">USP: {{ product.usp }}</p>
-        <button @click="addToCart(product)" class="add-to-cart-button">Add to Cart</button>
+
+        <!-- Dropdown Select with Class -->
+        <div class="merchant-select-container">
+          <select v-model="productPrice" @change="updateMerchantInfo" class="merchant-select">
+            <option value="" disabled>Select Merchant</option>
+            <option v-for="merchant in product.merchantList" :key="merchant.id" :value="merchant.price">
+              {{ merchant.name }} - ${{ merchant.price }}
+            </option>
+          </select>
+        </div>
+
+        <button @click="addToCart(product, productPrice, merchantName, merchantId)" class="add-to-cart-button">
+          Add to Cart
+        </button>
       </div>
     </div>
     
@@ -57,6 +101,7 @@ export default {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
@@ -67,7 +112,7 @@ export default {
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
-  background-color: #f4f4f4;
+  background-color: #EAE0C8;
   padding: 60px 20px;
   font-family: 'Inter', sans-serif;
 }
@@ -83,7 +128,7 @@ export default {
 .product-card {
   display: flex;
   flex-direction: row;
-  background-color: #ffffff;
+  background-color: #536878;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   padding: 40px;
@@ -115,27 +160,27 @@ export default {
 .product-name {
   font-size: 2rem;
   font-weight: 700;
-  color: #333;
+  color: #d9d9d9;
   margin-bottom: 12px;
 }
 
 .product-price {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #28a745;
+  color: #a1a728;
   margin-bottom: 12px;
 }
 
 .product-description-text {
   font-size: 1.1rem;
-  color: #555;
+  color: #000000;
   margin-bottom: 18px;
   line-height: 1.6;
 }
 
 .product-usp {
   font-style: italic;
-  color: #888;
+  color: #000000;
   margin-bottom: 25px;
 }
 
@@ -160,5 +205,40 @@ export default {
   font-size: 1.6rem;
   color: #ff4444;
   margin-top: 20px;
+}
+
+/* Dropdown Styling with Classes */
+.merchant-select-container {
+  margin-top: 10px;
+}
+
+.merchant-select {
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 250px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover and Focus Effects for Dropdown */
+.merchant-select:hover, .merchant-select:focus {
+  border-color: #ff7e5f;
+  box-shadow: 0 4px 8px rgba(255, 126, 95, 0.3);
+}
+
+.merchant-select option {
+  padding: 8px;
+  background-color: #f8f8f8;
+}
+
+.merchant-select:focus {
+  outline: none;
+  border-color: #ff7e5f;
 }
 </style>
