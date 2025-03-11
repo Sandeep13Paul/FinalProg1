@@ -43,7 +43,7 @@
    
   <template>
     <div class="product-search-list">
-      <h2>Product Search List</h2>
+      <h2 class="psearchtittle">Product Search List</h2>
 
       <div v-if="filteredProducts.length === 0">
         <p>No products found matching your search criteria.</p>
@@ -51,7 +51,7 @@
 
       <div v-if="filteredProducts.length > 0" class="product-cards">
         <div v-for="product in filteredProducts" :key="product.id" class="product-card">
-          <router-link :to="'/product-description/' + product.id">
+          <router-link :to="'/product-description/' + product.id" class="product-link">
             <img :src="product.image" alt="Product Image" class="product-image" />
             <h3 class="product-name">{{ product.name }}</h3>
             <p class="product-price">${{ product.merchantList[0].price }}</p>
@@ -71,13 +71,19 @@
   color: #536878;
   padding: 40px;
   border-radius: 10px;
+  /* height: 970px; */
   text-align: center;
   font-family: 'Inter', sans-serif;
 }
 
-h2 {
-  color: #5e402b;
-  margin-bottom: 20px;
+
+.psearchtittle{
+  font-size: 2.8rem;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 40px;
+  text-align: center;
+
 }
 
 .product-cards {
@@ -112,5 +118,8 @@ h2 {
   width: 100%;
   height: auto;
   border-radius: 10px;
+}
+.product-link {
+  text-decoration: none;
 }
 </style>

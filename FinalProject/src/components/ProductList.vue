@@ -14,7 +14,7 @@ export default {
 
 <template>
   <div class="product-list">
-    <h2 style="color: #5e402b;">Product List</h2>
+    <h2 class="prductlisttillte">Product List</h2>
     <div class="product-cards">
       <div v-for="product in products" :key="product.id" class="product-card">
         <router-link :to="'/product-description/' + product.id" class="product-link">
@@ -38,6 +38,13 @@ export default {
   text-align: center;
   background-color: #EAE0C8;
   font-family: 'Inter', sans-serif;
+}
+.prductlisttillte{
+  font-size: 2.8rem;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
 .product-cards {
