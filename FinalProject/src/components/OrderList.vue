@@ -11,9 +11,18 @@ export default {
 
     const orders = orderStore.orderItems;
 
-    console.log("order items",orders.items)
+    console.log("order items", orders.items);
 
-    return { orderStore };
+    const calculateOrderTotal = (order) => {
+      let total = 0;
+      order.items.forEach(item => {
+        total += item.productPrice * item.quantity;
+      });
+      return total.toFixed(2);
+    };
+
+    
+    return { orderStore, calculateOrderTotal };
   }
 };
 </script>
@@ -40,7 +49,7 @@ export default {
       </div>
 
       <hr />
-      <!-- <p class="order-total">Order Total: ${{ calculateOrderTotal(order) }}</p> -->
+      <p class="order-total">Order Total: ${{ calculateOrderTotal(order) }}</p>
     </div>
   </div>
 </template>

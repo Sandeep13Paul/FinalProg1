@@ -133,12 +133,12 @@
 }
 
 .cart-item button:hover {
-  background-color: #fb9d0d;
+  background-color: #536878; 
   transform: scale(1.05); 
 }
 
 .cart-item button:active {
-  background-color: #f56b05; 
+  background-color: #05f5d9; 
 }
 
 .total-price {
@@ -154,15 +154,21 @@ button {
   margin-top: 20px;
 }
 .checkout{
-  background-color: #244555;
-  color: white;
+  padding: 14px 22px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: #fff;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  align-items: center;
-  font-size: 16px;
-  margin-top: 20px;
-  border-radius: 5px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left: 65px;
 
+}
+.checkout:hover{
+  transform: scale(1.07);
+  box-shadow: 0 6px 14px rgba(255, 126, 95, 0.3);
 }
 
 button:hover {
