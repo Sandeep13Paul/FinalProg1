@@ -53,7 +53,7 @@
         <div class="total-price">
           <h3>Total Price: ${{ getTotalPrice() }}</h3>
         </div>
-        <button @click="checkoutButton">Proceed to Checkout</button>
+        <button class="checkout"  @click="checkoutButton">Proceed to Checkout</button>
       </div>
       <div v-else>
         <p>Your cart is empty. Add some items to your cart!</p>
@@ -77,7 +77,7 @@
 }
 
 .cartname {
-  color: #ffffff;
+  color: rgb(207, 207, 55);
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
@@ -145,19 +145,24 @@
   font-size: 20px;
   font-weight: bold;
   margin-top: 20px;
-  color: #e64833;
+  color:rgb(230, 206, 51);
   text-align: center; 
 }
 
 button {
   padding: 10px 20px;
+  margin-top: 20px;
+}
+.checkout{
   background-color: #244555;
   color: white;
   border: none;
   cursor: pointer;
+  align-items: center;
   font-size: 16px;
   margin-top: 20px;
   border-radius: 5px;
+
 }
 
 button:hover {

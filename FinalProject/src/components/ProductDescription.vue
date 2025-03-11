@@ -1,8 +1,6 @@
 <script>
 import { getProducts } from '../Api.js';
 import { useCartStore } from '../pinia/cartPinia.js';
-import {useToast} from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';
 
 export default {
   name: 'ProductDescription',
@@ -40,13 +38,7 @@ export default {
       console.log('Adding product to cart:', product);
       console.log("Merchant Name:", merchantName);
       console.log("Merchant ID:", merchantId);
-      this.$toast.open({
-      message: 'Product added to cart!',
-      type: 'success', // You can change this to 'error' or 'info' based on your use case
-      duration: 3000, // Toast will disappear after 3 seconds
-      position: 'top-right', // Position of the toast
-      dismissible: true, // Allow the user to dismiss the toast manually
-    });
+      this.cart.addToCart(product, 1, productPrice, merchantName, merchantId); 
     },
 
     updateMerchantInfo(event) {
