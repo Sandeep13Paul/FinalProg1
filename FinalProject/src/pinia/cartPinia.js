@@ -47,7 +47,7 @@ export const useCartStore = defineStore('cart',{
                 this.cartItems.splice(index, 1);  
               }
       
-             t
+             
               this.cartItems.push({
                 productId: item.id,
                 productName: item.name,
