@@ -11,7 +11,7 @@ export default {
 
     const orders = orderStore.orderItems;
 
-    console.log(orders.items)
+    console.log("order items",orders.items)
 
     return { orderStore };
   }

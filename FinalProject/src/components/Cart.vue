@@ -26,6 +26,7 @@
         return this.cart.totalPrice();
       },
       checkoutButton() {
+        console.log("hello ",this.cart.cartItems);
         this.order.addOrder(this.cart.cartItems);
         this.cart.clearCart();
         this.$router.push('/ThankYou');
