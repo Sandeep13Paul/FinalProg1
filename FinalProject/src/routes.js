@@ -7,6 +7,7 @@ import Profile from './components/Profile.vue'
 import ProductList from './components/ProductList.vue'
 import ProductSearchList from './components/ProductSearchList.vue'
 import ProductDescription from './components/ProductDescription.vue'
+import LoginPage from './components/LoginPage.vue'
 const routes = [
  
  
@@ -16,6 +17,7 @@ const routes = [
   {path:'/Profile',component:Profile},
   {path:'/ProductSearchList', component:ProductSearchList},
   {path: '/product-description/:productId', component: ProductDescription},
+  {path:'/LoginPage', component: LoginPage}
 ]
  
 const router = createRouter({

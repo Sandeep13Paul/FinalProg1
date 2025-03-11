@@ -1,0 +1,83 @@
+<script>
+export default {
+    data() {
+      return {
+        
+      };
+    },
+    methods: {
+     
+    },
+  };
+</script>
+
+<template>
+  <div class="login-page">
+    <div class="login-card">
+      <h1 class="login-title">Login Page</h1>
+      <div class="login-form">
+        <input type="email" placeholder="Enter Your Email" class="input-field" />
+        <input type="password" placeholder="Enter Your Password" class="input-field" />
+        <button class="submit-button">Submit</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background-color: #EAE0C8;
+}
+
+
+.login-card {
+    background-color: #536878;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  height: 350px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+
+.login-title {
+  font-size: 2rem;
+  color: #1f1e1e;
+  margin-bottom: 20px;
+}
+
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 50px;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+</style>
