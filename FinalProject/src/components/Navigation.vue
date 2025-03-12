@@ -47,8 +47,8 @@ export default {
       <li class="navbar-item cart-profile">
         <button class="cart nav-button" @click="goToCart">Cart</button>
 
-        <button class="profile nav-button" @click="goToProfile" v-if="false">Profile</button>
-        <button class="profile nav-button"  @click=goToLogin>Login</button>
+        <button class="profile nav-button" @click="goToProfile" v-if="true">Profile</button>
+        <button class="profile nav-button"  @click=goToLogin v-else>Login</button>
       </li>
     </ul>
   </nav>

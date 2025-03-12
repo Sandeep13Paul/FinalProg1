@@ -6,8 +6,16 @@ export default {
       products: []
     };
   },
-  created() {
-    this.products = getProducts();
+  // created() {
+  //   this.products = getProducts();
+  //   console.log(this.products)
+  // }
+  async mounted() {
+    try {
+      this.products = await getProducts();  // Await the promise and assign to products
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
   }
 };
 </script>
@@ -17,10 +25,10 @@ export default {
     <h2 class="prductlisttillte">Product List</h2>
     <div class="product-cards">
       <div v-for="product in products" :key="product.id" class="product-card">
-        <router-link :to="'/product-description/' + product.id" class="product-link">
+        <router-link :to="'/product-description/' + product.productId" class="product-link">
           <img :src="product.image" alt="Product Image" class="product-image" />
           <h3 class="product-name">{{ product.name }}</h3>
-          <p class="product-price">${{ product.merchantList[0].price }}</p>
+          <p class="product-price">${{ product.price }}</p>
           <p class="product-description">{{ product.description }}</p>
           <p class="product-usp">USP: {{ product.usp }}</p>
         </router-link>

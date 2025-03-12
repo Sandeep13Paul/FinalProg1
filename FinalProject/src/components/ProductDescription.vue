@@ -1,5 +1,5 @@
 <script>
-import { getProducts } from '../Api.js';
+import { getProductById, getProducts } from '../Api.js';
 import { useCartStore } from '../pinia/cartPinia.js';
 
 export default {
@@ -22,8 +22,8 @@ export default {
   methods: {
     async fetchProductDetails(id) {
       try {
-        const allProducts = await getProducts();
-        this.product = allProducts.find(product => product.id === parseInt(id)) || null;
+        this.roduct = await getProductById();
+        // this.product = allProducts.find(product => product.id === parseInt(id)) || null;
         if (this.product) {
           this.productPrice = this.product.merchantList[0].price;
           this.merchantName = this.product.merchantList[0].name;
