@@ -61,7 +61,7 @@
 export const getProducts = async () => {
 
   try {
-    const response = await fetch(`http://localhost:8080/Products/getAllProducts`);
+    const response = await fetch(`http://10.20.5.3:8080/Products/getAllProducts`);
     const data = await response.json();
     console.log("get all data", data.data);
     return data.data || []; 
@@ -76,7 +76,7 @@ export const getProducts = async () => {
 export const getProductById = async (id) => {
 
   try {
-    const response = await fetch(`http://localhost:8080/Products/getByProductId/${id}`);
+    const response = await fetch(`http://10.20.5.3:8080/Products/getByProductId/${id}`);
     const data = await response.json();
     console.log("get all data", data.data);
     return data.data || []; 
@@ -86,4 +86,48 @@ export const getProductById = async (id) => {
     return [];
   }
 };
+
+export const addToCart = async (userId, product) => {
+  try {
+    const response = await fetch(`http://10.20.5.3:8080/cart/addToCart/${userId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        productMerchantId: product.productMerchantId,
+        name: product.name,
+        price: product.price,
+        merchantName: product.merchantName,
+        quantity: 1,
+      }),
+    });
  
+    if (response.ok) {
+      const updatedCart = await response.json();
+      console.log(updatedCart); 
+    } else {
+      console.error('Failed to add item to cart');
+    }
+  } catch (error) {
+    console.error('Error adding item to cart:', error);
+  }
+};
+ 
+export const getProductByName = async (searchQuery) => {
+   try {
+
+    const response = await fetch(`http://10.20.5.3:8080/api/products/search?productName=${searchQuery}`);
+ 
+    if (response.ok) {
+      const searchedItems = await response.json();
+      console.log(searchedItems.data);
+      return searchedItems.data;
+    } else {
+      console.error('Failed to add item to cart');
+    }
+    
+   } catch (error) {
+      console.log("Product Not Present with the provided name");
+   }
+}

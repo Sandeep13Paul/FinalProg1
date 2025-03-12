@@ -22,7 +22,8 @@ export default {
   methods: {
     async fetchProductDetails(id) {
       try {
-        this.roduct = await getProductById();
+        this.product = await getProductById(id);
+        console.log("product", this.product)
         // this.product = allProducts.find(product => product.id === parseInt(id)) || null;
         if (this.product) {
           this.productPrice = this.product.merchantList[0].price;
@@ -38,7 +39,8 @@ export default {
       console.log('Adding product to cart:', product);
       console.log("Merchant Name:", merchantName);
       console.log("Merchant ID:", merchantId);
-      this.cart.addToCart(product, 1, productPrice, merchantName, merchantId); 
+      this.cart.addToCart(product, 1, productPrice, merchantName, merchantId);
+      
     },
 
     updateMerchantInfo(event) {
@@ -77,7 +79,7 @@ export default {
           <select v-model="productPrice" @change="updateMerchantInfo" class="merchant-select">
             <option value="" disabled>Select Merchant</option>
             <option v-for="merchant in product.merchantList" :key="merchant.id" :value="merchant.price">
-              {{ merchant.name }} - ${{ merchant.price }}
+              {{ merchant.merchantName }} - ${{ merchant.price }}
             </option>
           </select>
         </div>

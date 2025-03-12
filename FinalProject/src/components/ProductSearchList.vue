@@ -1,5 +1,5 @@
   <script>
-  import { getProducts } from '../Api.js';
+  import { getProducts, getProductByName } from '../Api.js';
 
   export default {
     name: 'ProductSearchList',
@@ -23,20 +23,34 @@
         if (!this.searchQuery) {
           return this.products;
         }
-        return this.products.filter(product =>
-          product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          product.description.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+        return this.products
+        // .filter(product =>
+        //   product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        //   product.description.toLowerCase().includes(this.searchQuery.toLowerCase())
+        // );
       }
     },
     methods: {
-      fetchProducts() {
-        const allProducts = getProducts();
-        this.products = allProducts.filter(product =>
-          product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          product.description.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+      async fetchProducts() {
+    try {
+      const searchedItems = await getProductByName(this.searchQuery);
+
+      console.log("items", searchedItems)
+      if (searchedItems) {
+        this.products = searchedItems;
+        // .filter(product =>
+        //   product.productName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        //   product.productDescription.toLowerCase().includes(this.searchQuery.toLowerCase())
+        // );
+      } else {
+        this.products = [];
       }
+      
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      this.products = [];
+    }
+  }
     }
   };
 </script>
@@ -52,11 +66,11 @@
       <div v-if="filteredProducts.length > 0" class="product-cards">
         <div v-for="product in filteredProducts" :key="product.id" class="product-card">
           <router-link :to="'/product-description/' + product.id" class="product-link">
-            <img :src="product.image" alt="Product Image" class="product-image" />
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-price">${{ product.merchantList[0].price }}</p>
-            <p class="product-description">{{ product.description }}</p>
-            <p class="product-usp">USP: {{ product.usp }}</p>
+            <img :src="product.productImageUrl" alt="Product Image" class="product-image" />
+            <h3 class="product-name">{{ product.productName }}</h3>
+            <p class="product-price">${{ product.productMerchantPrice }}</p>
+            <p class="product-description">{{ product.productDescription }}</p>
+            <p class="product-usp">USP: {{ product.productUsp }}</p>
           </router-link>
         </div>
       </div>
