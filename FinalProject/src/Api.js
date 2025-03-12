@@ -117,7 +117,7 @@ export const addToCart = async (userId, product) => {
 export const getProductByName = async (searchQuery) => {
    try {
 
-    const response = await fetch(`http://10.20.5.3:8080/api/products/search?productName=${searchQuery}`);
+    const response = await fetch(`http://10.20.5.3:8080/Search/getByProductName?productName=${searchQuery}`);
  
     if (response.ok) {
       const searchedItems = await response.json();
@@ -130,4 +130,22 @@ export const getProductByName = async (searchQuery) => {
    } catch (error) {
       console.log("Product Not Present with the provided name");
    }
+}
+
+export const loginUser = async (details) => {
+  try {
+    const response = await fetch(`http://10.20.5.3:8080/User/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: details.email,
+        password: details.password
+      }),
+    });
+
+  } catch (error) {
+    console.error("Invalid credentials");
+  }
 }
