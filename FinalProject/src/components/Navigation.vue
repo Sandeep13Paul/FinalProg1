@@ -16,6 +16,10 @@ export default {
     {
       this.$router.push('/LoginPage');
     },
+    goToRegister()
+    {
+      this.$router.push('/RegisterPage');
+    },
     homePage() {
       this.$router.push('/');
     },
@@ -47,8 +51,10 @@ export default {
       <li class="navbar-item cart-profile">
         <button class="cart nav-button" @click="goToCart">Cart</button>
 
-        <button class="profile nav-button" @click="goToProfile" v-if="true">Profile</button>
-        <button class="profile nav-button"  @click=goToLogin v-else>Login</button>
+        
+        <button class="profile nav-button"  @click=goToLogin v-if="true">Login</button>
+        <button class="profile nav-button" @click="goToRegister" v-if="true">Register</button>
+        <button class="profile nav-button" @click="goToProfile" v-else>Profile</button>
       </li>
     </ul>
   </nav>

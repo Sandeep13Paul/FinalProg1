@@ -8,6 +8,7 @@ import ProductList from './components/ProductList.vue'
 import ProductSearchList from './components/ProductSearchList.vue'
 import ProductDescription from './components/ProductDescription.vue'
 import LoginPage from './components/LoginPage.vue'
+import RegisterPage from './components/RegisterPage.vue'
 const routes = [
  
  
@@ -17,7 +18,8 @@ const routes = [
   {path:'/Profile',component:Profile},
   {path:'/ProductSearchList', component:ProductSearchList},
   {path: '/product-description/:productId', component: ProductDescription},
-  {path:'/LoginPage', component: LoginPage}
+  {path:'/LoginPage', component: LoginPage},
+  {path:'/RegisterPage', component: RegisterPage}
 ]
  
 const router = createRouter({
