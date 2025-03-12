@@ -1,18 +1,19 @@
 <script>
+import { registerUser } from "../Api.js"
 export default {
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
+      user:{
+        name: '',
+        email: '',
+        password: '',
+      }
     };
   },
   methods: {
-    submitForm() {
-      // Here you can add the logic to handle form submission
-      console.log("Name:", this.name);
-      console.log("Email:", this.email);
-      console.log("Password:", this.password);
+    registerUser() {
+      registerUser(this.user)
+      console.log(this.user);
     },
   },
 };
@@ -23,32 +24,29 @@ export default {
     <div class="register-card">
       <h1 class="register-title">Register User</h1>
       <div class="register-form">
-        <!-- Name Field -->
         <input 
-          v-model="name" 
+          v-model="user.name" 
           type="text" 
           placeholder="Enter your name" 
           class="input-field name-input"
         />
         
-        <!-- Email Field -->
         <input 
-          v-model="email" 
+          v-model="user.email" 
           type="email" 
           placeholder="Enter Your Email" 
           class="input-field"
         />
         
-        <!-- Password Field -->
         <input 
-          v-model="password" 
+          v-model="user.password" 
           type="password" 
           placeholder="Enter Your Password" 
           class="input-field"
         />
         
         <!-- Submit Button -->
-        <button @click="submitForm" class="submit-button">Submit</button>
+        <button class="submit-button" @click="registerUser">Submit</button>
       </div>
     </div>
   </div>

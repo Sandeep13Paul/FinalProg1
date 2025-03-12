@@ -134,7 +134,8 @@ export const getProductByName = async (searchQuery) => {
 
 export const loginUser = async (details) => {
   try {
-    const response = await fetch(`http://10.20.5.3:8080/User/login`, {
+    console.log(details);
+    const response = await fetch(`http://10.20.5.3:8080/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -147,5 +148,27 @@ export const loginUser = async (details) => {
 
   } catch (error) {
     console.error("Invalid credentials");
+  }
+}
+
+export const registerUser = async (details) => {
+  try {
+    console.log(details);
+    const response = await fetch(`http://10.20.5.3:8080/auth/create-user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: details.name,
+        email: details.email,
+        password: details.password
+      }),
+    });
+
+    console.log(response);
+
+  } catch (error) {
+    console.error("Error in registering user " + error);
   }
 }

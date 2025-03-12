@@ -1,28 +1,42 @@
+
 <script>
+import { loginUser } from "../Api.js"
+
 export default {
     data() {
       return {
+        user: {
+          email: '',
+          password: ''
+        }
         
       };
     },
     methods: {
+        userlogined()
+        {
+            loginUser(this.user)
+            console.log(this.user);
+            
+        }
      
     },
   };
 </script>
 
 <template>
-  <div class="login-page">
-    <div class="login-card">
-      <h1 class="login-title">Login Page</h1>
-      <div class="login-form">
-        <input type="email" placeholder="Enter Your Email" class="input-field" />
-        <input type="password" placeholder="Enter Your Password" class="input-field" />
-        <button class="submit-button">Submit</button>
+    <div class="login-page">
+      <div class="login-card">
+        <h1 class="login-title">Login Page</h1>
+        <div class="login-form">
+          <input type="email" placeholder="Enter Your Email" class="input-field" v-model="user.email"/>
+          <input type="password" placeholder="Enter Your Password" class="input-field" v-model="user.password" />
+          <button class="submit-button" @click="userlogined">Submit</button>
+        </div>
       </div>
     </div>
-  </div>
-</template>
+  </template>
+  
 
 <style scoped>
 
