@@ -1,28 +1,41 @@
 
 <script>
-import { loginUser } from "../Api.js"
-
+import {loginUser} from '../Api.js'
 export default {
     data() {
       return {
         user: {
           email: '',
           password: ''
-        }
-        
+        },
       };
     },
     methods: {
-        userlogined()
-        {
-            loginUser(this.user)
-            console.log(this.user);
-            
+      async userlogined() {
+        try {
+          const userDetails = await loginUser(this.user);  
+          if (userDetails) {
+            console.log('User details:', userDetails); 
+            const dataToStore = {
+            jwtToken: userDetails.jwtToken,
+            userId: userDetails.userId
+          };
+            localStorage.setItem('userDetails', JSON.stringify(dataToStore));
+            const storedData = localStorage.getItem('userDetails');
+            console.log('Stored data in localStorage:', storedData);
+            this.$router.push('/');
+          } else {
+            console.log('No data returned from API');
+          }
+        } catch (e) {
+          console.error('Login error:', e);
         }
-     
-    },
+      }
+    }
   };
-</script>
+  </script>
+
+  
 
 <template>
     <div class="login-page">

@@ -146,6 +146,10 @@ export const loginUser = async (details) => {
       }),
     });
 
+    const data = await response.json();
+    // console.log("api",await response.json());
+    return data;
+
   } catch (error) {
     console.error("Invalid credentials");
   }
@@ -166,7 +170,11 @@ export const registerUser = async (details) => {
       }),
     });
 
-    console.log(response);
+    const data = await response.json();
+    // console.log("api",await response.json());
+    return data;
+   
+  
 
   } catch (error) {
     console.error("Error in registering user " + error);

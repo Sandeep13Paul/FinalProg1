@@ -2,8 +2,21 @@
 export default {
   data() {
     return {
-      searchQuery: ''
+      searchQuery: '',
+      isLoggedIn: localStorage.getItem("userDetails") !== null
     };
+  },
+  watch: {
+    isLoggedIn(newValue) {
+      console.log('Login status changed:', newValue);
+    }
+  },
+  mounted() {
+    window.addEventListener('storage', () => {
+      this.isLoggedIn = localStorage.getItem("userDetails") !== null;
+    });
+
+    this.isLoggedIn = localStorage.getItem("userDetails") !== null;
   },
   methods: {
     goToCart() {
@@ -52,9 +65,9 @@ export default {
         <button class="cart nav-button" @click="goToCart">Cart</button>
 
         
-        <button class="profile nav-button"  @click=goToLogin v-if="true">Login</button>
-        <button class="profile nav-button" @click="goToRegister" v-if="true">Register</button>
-        <button class="profile nav-button" @click="goToProfile" v-else>Profile</button>
+        <button class="profile nav-button"  @click=goToLogin v-if="!isLoggedIn">Login</button>
+        <button class="profile nav-button" @click="goToRegister" v-if="!isLoggedIn">Register</button>
+        <button class="profile nav-button" @click="goToProfile" v-if="isLoggedIn">Profile</button>
       </li>
     </ul>
   </nav>
