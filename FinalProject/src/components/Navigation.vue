@@ -33,6 +33,11 @@ export default {
     {
       this.$router.push('/RegisterPage');
     },
+    goToLogout()
+    {
+      localStorage.removeItem('userDetails');
+      this.$router.push('/');
+    },
     homePage() {
       this.$router.push('/');
     },
@@ -68,6 +73,7 @@ export default {
         <button class="profile nav-button"  @click=goToLogin v-if="!isLoggedIn">Login</button>
         <button class="profile nav-button" @click="goToRegister" v-if="!isLoggedIn">Register</button>
         <button class="profile nav-button" @click="goToProfile" v-if="isLoggedIn">Profile</button>
+        <button class="profile nav-button" @click="goToLogout" v-if="isLoggedIn">Logout</button>
       </li>
     </ul>
   </nav>

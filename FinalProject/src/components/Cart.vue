@@ -13,7 +13,8 @@
     async mounted() {
     try {
       const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-      this.cartItems = await getAllCartItems(userDetails.userId);  // Await the promise and assign to products
+      this.cartItems = await getAllCartItems(userDetails.userId, userDetails.jwtToken);  // Await the promise and assign to products
+      console.log("cart items", this.cartItems);
     } catch (error) {
       console.error('Error fetching products:', error);
     }
@@ -21,17 +22,17 @@
     methods: {
       async increaseQuantity(item, flag) {
         const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-        const quantity = await updateCartQuantity(item, flag, userDetails.userId);
+        const quantity = await updateCartQuantity(item, flag, userDetails.userId, userDetails.jwtToken);
         this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
       },
       async decreaseQuantity(item, flag) {
         const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-        const quantity = await updateCartQuantity(item, flag, userDetails.userId);
+        const quantity = await updateCartQuantity(item, flag, userDetails.userId, userDetails.jwtToken);
         this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
       },
       removeItem(productMerchantId) {
         const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-        const flag = removeItemFromCart(userDetails.userId, productMerchantId);
+        const flag = removeItemFromCart(userDetails.userId, productMerchantId, userDetails.jwtToken);
         console.log(flag);
  
       },
@@ -45,8 +46,8 @@
         // this.cart.clearCart();
  
         const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-        const addOrder = await addToOrders(userDetails.userId, this.totalPrice);
-        const clearTheCart = await clearCart(userDetails.userId);
+        const addOrder = await addToOrders(userDetails.userId, this.totalPrice, userDetails.jwtToken);
+        const clearTheCart = await clearCart(userDetails.userId, userDetails.jwtToken);
  
         console.log(addOrder, " " , clearTheCart);
         this.$router.push('/ThankYou');
@@ -197,5 +198,3 @@ button:hover {
 }
  
 </style>
- 
- 

@@ -33,10 +33,6 @@
 //     ];
 //   };
  
-export const cartDetails = [
- 
-];
- 
  
  
 // export const getProducts = async () => {
@@ -60,217 +56,217 @@ export const cartDetails = [
  
 export const getProducts = async () => {
  
-try {
-  const response = await fetch(`http://localhost:8080/Products/getAllProducts`);
-  const data = await response.json();
-  console.log("get all data", data.data);
-  return data.data || [];
- 
-} catch (e) {
-  console.log(e);
-  return [];
-}
-};
- 
- 
-export const getProductById = async (id) => {
- 
-try {
-  const response = await fetch(`http://localhost:8080/Products/getByProductId/${id}`);
-  const data = await response.json();
-  console.log("get all data", data.data);
-  return data.data || [];
- 
-} catch (e) {
-  console.log(e);
-  return [];
-}
-};
- 
-export const addToCartItem = async (userId, product, productMerchantId, productPrice, merchantName, token) => {
-try {
-  // console.log("hi", productMerchantId)
-  console.log(product.imageUrl);
-  
-  const response = await fetch(`http://localhost:8080/Cart/addToCart/${userId}`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      productMerchantId: productMerchantId,
-      name: product.name,
-      merchantName: merchantName,
-      price: productPrice,
-      quantity: 1,
-      image: product.imageUrl
-    }),
-  });
- 
-  if (response.ok) {
-    const updatedCart = await response.json();
-    console.log(updatedCart);
-  } else {
-    console.error('Failed to add item to cart');
-  }
-} catch (error) {
-  console.error('Error adding item to cart:', error);
-}
-};
- 
-export const getProductByName = async (searchQuery) => {
-try {
- 
-  const response = await fetch(`http://localhost:8080/Search/getByProductName?productName=${searchQuery}`);
- 
-  if (response.ok) {
-    const searchedItems = await response.json();
-    console.log(searchedItems.data);
-    return searchedItems.data;
-  } else {
-    console.error('Failed to add item to cart');
-  }
-  
-} catch (error) {
-    console.log("Product Not Present with the provided name");
-}
-}
- 
-export const loginUser = async (details) => {
-try {
-  console.log(details);
-  const response = await fetch(`http://localhost:8080/auth/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: details.email,
-      password: details.password
-    }),
-  });
- 
-  const data = await response.json();
-  // console.log("api",await response.json());
-  return data;
- 
-} catch (error) {
-  console.error("Invalid credentials");
-}
-}
- 
-export const registerUser = async (details) => {
-try {
-  console.log(details);
-  const response = await fetch(`http://localhost:8080/auth/create-user`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: details.name,
-      email: details.email,
-      password: details.password
-    }),
-  });
- 
-  const data = await response.json();
-  // console.log("api",await response.json());
-  return data;
- 
- 
- 
-} catch (error) {
-  console.error("Error in registering user " + error);
-}
-}
- 
-export const getProfileById = async (userId) => {
-try {
-  const response = await fetch(`http://localhost:8080/user/getUserById/${userId}`);
-  const data = await response.json();
-  console.log("get profile data", data.data);
-  return data.data || [];
- 
-} catch (e) {
-  console.log(e);
-  return [];
-}
-}
- 
-export const getProductMerchantId = async (productId, merchantId) => {
-try {
-  const response = await fetch(`http://localhost:8080/Products/getProductMerchantId/${productId}/${merchantId}`);
-  const data = await response.json();
-  console.log("get product merchant id", data.data);
-  return data.data || [];
- 
- 
-} catch (e) {
-  console.log(e);
-  return [];
-}
-}
- 
-export const addToOrders = async (userId, totalPrice) => {
-try {
-  const response = await fetch(`http://localhost:8080/Orders/addToOrderHistory/${userId}/${totalPrice}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  const data = await response.json();
-  console.log("Added to order", data);
-  return data || [];
-  
-} catch (error) {
-  console.error(error);
-  
-}
-}
- 
-export const getAllCartItems = async (userId) => {
-try {
-  const response = await fetch(`http://localhost:8080/Cart/getAllCartItems/${userId}`);
-  const data = await response.json();
-  console.log("get product merchant id", data.data);
-  return data.data || [];
-  
-} catch (error) {
-  console.error(error);
-  
-}
-}
- 
-export const updateCartQuantity = async (item, flag, userId) => {
-try {
-  const response = await fetch(`http://localhost:8080/Cart/updateQuantity/${userId}/${item.productMerchantId}?increase=${flag}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  });
-  const data = await response.json();
-  console.log("quantity", data.data);
-  return data.data || [];
-  
-} catch (error) {
-  console.error(error);
-  
-}
-}
- 
-export const removeItemFromCart = async (userId, productMerchantId) => {
   try {
-    const response = await fetch(`http://localhost:8080/Cart/removeFromCart/${userId}/${productMerchantId}`, {
-      method: 'DELETE',
+    const response = await fetch(`http://localhost:8080/Search/getAllProducts`);
+    const data = await response.json();
+    console.log("get all data", data.data);
+    return data.data || [];
+   
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+  };
+   
+   
+  export const getProductById = async (id) => {
+   
+  try {
+    const response = await fetch(`http://localhost:8080/Search/getByProductId/${id}`);
+    const data = await response.json();
+    console.log("get all data", data.data);
+    return data.data || [];
+   
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+  };
+   
+  export const addToCartItem = async (userId, product, productMerchantId, productPrice, merchantName, token) => {
+  try {
+    // console.log("hi", productMerchantId)
+    // console.log(product.imageUrl);
+    
+    const response = await fetch(`http://localhost:8080/Cart/addToCart/${userId}`, {
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        productMerchantId: productMerchantId,
+        name: product.productName,
+        merchantName: merchantName,
+        price: productPrice,
+        quantity: 1,
+        image: product.productImageUrl
+      }),
+    });
+   
+    if (response.ok) {
+      const updatedCart = await response.json();
+      console.log(updatedCart.data);
+      return updatedCart.data;
+    } else {
+      console.error('Failed to add item to cart');
+    }
+  } catch (error) {
+    console.error('Error adding item to cart:', error);
+  }
+  };
+   
+  export const getProductByName = async (searchQuery) => {
+  try {
+   
+    const response = await fetch(`http://localhost:8080/Search/getByProductName?productName=${searchQuery}`);
+   
+    if (response.ok) {
+      const searchedItems = await response.json();
+      console.log(searchedItems.data);
+      return searchedItems.data;
+    } else {
+      console.error('Failed to add item to cart');
+    }
+    
+  } catch (error) {
+      console.log("Product Not Present with the provided name");
+  }
+  }
+   
+  export const loginUser = async (details) => {
+  try {
+    console.log(details);
+    const response = await fetch(`http://localhost:8080/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: details.email,
+        password: details.password
+      }),
+    });
+   
+    const data = await response.json();
+    // console.log("api",await response.json());
+    return data;
+   
+  } catch (error) {
+    console.error("Invalid credentials");
+  }
+  }
+   
+  export const registerUser = async (details) => {
+  try {
+    console.log(details);
+    const response = await fetch(`http://localhost:8080/auth/create-user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: details.name,
+        email: details.email,
+        password: details.password
+      }),
+    });
+   
+    const data = await response.json();
+    // console.log("api",await response.json());
+    return data;
+   
+   
+   
+  } catch (error) {
+    console.error("Error in registering user " + error);
+  }
+  }
+   
+  export const getProfileById = async (userId) => {
+  try {
+    const response = await fetch(`http://localhost:8080/user/getUserById/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+    const data = await response.json();
+    console.log("get profile data", data.data);
+    return data.data || [];
+   
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+  }
+   
+  export const getProductMerchantId = async (productId, merchantId) => {
+  try {
+    const response = await fetch(`http://localhost:8080/Products/getProductMerchantId/${productId}/${merchantId}`);
+    const data = await response.json();
+    console.log("get product merchant id", data.data);
+    return data.data || [];
+   
+   
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+  }
+   
+  export const addToOrders = async (userId, totalPrice, token) => {
+  try {
+    const response = await fetch(`http://localhost:8080/Orders/addToOrderHistory/${userId}/${totalPrice}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     });
     const data = await response.json();
+    console.log("Added to order", data);
+    return data || [];
+    
+  } catch (error) {
+    console.error(error);
+    
+  }
+  }
+   
+  export const getAllCartItems = async (userId, token) => {
+  try {
+    const response = await fetch(`http://localhost:8080/Cart/getAllCartItems/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log("get product merchant id", data.data);
+    return data.data || [];
+    
+  } catch (error) {
+    console.error(error);
+    
+  }
+  }
+   
+  export const updateCartQuantity = async (item, flag, userId, token) => {
+  try {
+    console.log("update product", item, flag, userId, token);
+    const response = await fetch(`http://localhost:8080/Cart/updateQuantity/${userId}/${item.productMerchantId}?increase=${flag}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    
     console.log("quantity", data.data);
     return data.data || [];
     
@@ -279,52 +275,77 @@ export const removeItemFromCart = async (userId, productMerchantId) => {
     
   }
   }
- 
-export const clearCart = async (userId) => {
-  try {
-    const response = await fetch(`http://localhost:8080/Cart/clearCart/${userId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
-    const data = await response.json();
-    console.log("Deleted cart", data);
-    return data || [];
+   
+  export const removeItemFromCart = async (userId, productMerchantId, token) => {
+    try {
+      const response = await fetch(`http://localhost:8080/Cart/removeFromCart/${userId}/${productMerchantId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      console.log("quantity", data.data);
+      return data.data || [];
+      
+    } catch (error) {
+      console.error(error);
+      
+    }
+    }
+   
+  export const clearCart = async (userId, token) => {
+    try {
+      const response = await fetch(`http://localhost:8080/Cart/clearCart/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      console.log("Deleted cart", data);
+      return data || [];
+      
+    } catch (error) {
+      console.error(error);
+      
+    }
     
-  } catch (error) {
-    console.error(error);
-    
   }
-  
-}
-export const getOrder= async (userId) => {
-  try {
-    const response = await fetch(`http://localhost:8080/Orders/getAllOrders/${userId}`);
-    const data = await response.json();
-    console.log("All orders list", data.data);
-    return data.data || [];
+  export const getOrder = async (userId, token) => {
+    try {
+      const response = await fetch(`http://localhost:8080/Orders/getAllOrders/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      console.log("All orders list", data.data);
+      return data.data || [];
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
-  catch (error) {
-    console.error(error);
+   
+  export const getUserDetails = async (userId, token) => {
+    try {
+      const response = await fetch(`http://localhost:8080/home/getUserDetails/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      const datas = await response.json();
+      console.log("User details", datas);
+      return datas || [];
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
-}
- 
-export const getUserDetails = async (userId, token) => {
-  try {
-    const response = await fetch(`http://localhost:8080/home/getUserDetails/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    const datas = await response.json();
-    console.log("User details", datas);
-    return datas || [];
-  }
-  catch (error) {
-    console.error(error);
-  }
-}
- 

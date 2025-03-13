@@ -24,13 +24,14 @@ export default {
   <div class="product-list">
     <h2 class="prductlisttillte">Product List</h2>
     <div class="product-cards">
-      <div v-for="product in products" :key="product.id" class="product-card">
+      <div v-for="product in products" :key="product.productId" class="product-card">
         <router-link :to="'/product-description/' + product.productId" class="product-link">
-          <img :src="product.image" alt="Product Image" class="product-image" />
-          <h3 class="product-name">{{ product.name }}</h3>
-          <p class="product-price">${{ product.price }}</p>
-          <p class="product-description">{{ product.description }}</p>
-          <p class="product-usp">USP: {{ product.usp }}</p>
+          <img :src="product.productImageUrl" alt="Product Image" class="product-image" />
+          <h3 class="product-name">{{ product.productName }}</h3>
+          <p class="product-price">${{ product.productMerchantPrice }}</p>
+          <p class="product-description">{{ product.productDescription }}</p>
+          <p class="product-usp">USP: {{ product.productUsp }}</p>
+          <p class="product-usp">Merchant Name: {{ product.merchantName }}</p>
         </router-link>
       </div>
     </div>
@@ -104,7 +105,7 @@ export default {
 
 .product-image {
   width: 100%;
-  height: auto;
+  height: 400px;
   border-radius: 12px;
   margin-bottom: 20px;
 }

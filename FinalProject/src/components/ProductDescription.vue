@@ -1,6 +1,7 @@
 <script>
 import { getProductById, getProducts, addToCartItem, getProductMerchantId } from '../Api.js';
 import { useCartStore } from '../pinia/cartPinia.js';
+import { toast } from "vue3-toastify"
 
 export default {
   name: 'ProductDescription',
@@ -9,9 +10,16 @@ export default {
       product: null,
       cart: useCartStore(),
       productPrice: 0,
+      selectedMerchant: null,
       merchantName: "",
       merchantId: "",
-      selectedMerchant: null,
+      merchantList: [
+        // {
+        //   id: "",
+        //   productMerchantPrice: 0,
+        //   merchantName: ""
+        // }
+      ]
     };
   },
   created() {
@@ -22,47 +30,78 @@ export default {
   },
   methods: {
     async fetchProductDetails(id) {
-      try {
+    try {
         this.product = await getProductById(id);
-        console.log("product", this.product)
-        // this.product = allProducts.find(product => product.id === parseInt(id)) || null;
-        if (this.product) {
-          this.productPrice = this.product.merchantList[0].price;
-          this.merchantName = this.product.merchantList[0].name;
-          this.merchantId = this.product.merchantList[0].id;
-        }
-      } catch (error) {
+        console.log("Product Data:", this.product);
+ 
+            const productDetails = this.product;
+            this.productPrice = productDetails[0].productMerchantPrice;
+ 
+            for (let product of productDetails) {
+              console.log("Product" + product);
+              const merchantName = product.merchantName;
+              const merchantId = product.merchantId;
+              const merchantPrice = product.productMerchantPrice;
+              this.merchantList.push({
+                id: merchantId,
+                productMerchantPrice: merchantPrice,
+                merchantName: merchantName,
+              })
+            }
+ 
+            console.log("Merchant List:", this.merchantList);
+    } catch (error) {
         console.error("Error fetching product details:", error);
-      }
-    },
+    }
+},
 
-    async addToCart(product) {
+    async addToCart() {
       console.log('Adding product to cart:', this.product);
       console.log("Merchant Name:", this.merchantName);
       console.log("Merchant ID:", this.merchantId);
       // this.cart.addToCart(product, 1, productPrice, merchantName, merchantId);
       const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
-      const productMerchantId = await getProductMerchantId(this.product.id, this.merchantId);
+      const productMerchantId = await getProductMerchantId(this.product[0].productId, this.merchantId);
       console.log(productMerchantId);
       console.log("User Details:", userDetails);
-      const flag = await addToCartItem(userDetails.userId, this.product, this.productMerchantId, this.productPrice, this.merchantName,userDetails.jwtToken)
+      const flag = await addToCartItem(userDetails.userId, this.product[0], productMerchantId, this.productPrice, this.merchantName, userDetails.jwtToken)
       console.log(flag);
+      if(flag)
+     {
+         toast("Item added to cart", {
+              theme: "colored",
+              type: "success",
+              position: "top-center",
+              autoClose: 2000,
+              dangerouslyHTMLString: true
+            });
+     }
+     else
+     {
+      toast("Item Out of Stock", {
+              theme: "colored",
+              type: "success",
+              position: "top-center",
+              autoClose: 2000,
+              dangerouslyHTMLString: true
+            });
+     }
+ 
     },
 
     updateMerchantInfo() {
-      console.log("Merchant Name:", this.productPrice);
+      console.log("Merchant Name:", event.target.value);
       // const selectedPrice = parseFloat(this.productPrice);
 
-      // const selectedMerchant = this.product.merchantList.find(
-      //   merchant => merchant.price === selectedPrice
-      // );
+      // this.productOrice =
+      this.productPrice = this.selectedMerchant.productMerchantPrice;
 
       if (this.selectedMerchant) {
         console.log(this.selectedMerchant);
         
-        this.merchantName = this.selectedMerchant.merchantName;        ;
-        this.merchantId = this.selectedMerchant.merchantId;
+        this.merchantName = this.selectedMerchant.merchantName;        
+        this.merchantId = this.selectedMerchant.id;
       }
       console.log(this.merchantName, this.merchantId, "updated");
 
@@ -77,14 +116,14 @@ export default {
 
     <div v-if="product" class="product-card">
       <div class="product-image-container">
-        <img :src="product.image" alt="Product Image" class="product-image" />
+        <img :src="product[0].productImageUrl" alt="Product Image" class="product-image" />
       </div>
 
       <div class="product-info">
-        <h2 class="product-name">{{ product.name }}</h2>
+        <h2 class="product-name">{{ product[0].productName }}</h2>
         <p class="product-price">${{ productPrice }}</p>
-        <p class="product-description-text">{{ product.description }}</p>
-        <p class="product-usp">USP: {{ product.usp }}</p>
+        <p class="product-description-text">{{ product[0].productDescription }}</p>
+        <p class="product-usp">USP: {{ product[0].productUsp }}</p>
 
         <!-- Dropdown Select with Class -->
         <div class="merchant-select-container">
@@ -96,8 +135,8 @@ export default {
           </select> -->
           <select v-model="selectedMerchant" @change="updateMerchantInfo" class="merchant-select">
             <option value="" disabled>Select Merchant</option>
-            <option v-for="merchant in product.merchantList" :key="merchant.id" :value="merchant">
-              {{ merchant.merchantName }} - ${{ merchant.price }}
+            <option v-for="merchant in merchantList" :key="merchant.id" :value="merchant">
+              {{ merchant.merchantName }} - ${{ merchant.productMerchantPrice }}
             </option>
           </select>
         </div>

@@ -34,7 +34,7 @@ export default {
       const userDetails = JSON.parse(localStorage.getItem('userDetails'));
       console.log(userDetails);
       
-      this.orders = await getOrder(userDetails.userId);
+      this.orders = await getOrder(userDetails.userId, userDetails.jwtToken);
       console.log(this.orders);
       
     } catch (error) {
@@ -177,4 +177,3 @@ hr {
  
  
 </style>
- 
