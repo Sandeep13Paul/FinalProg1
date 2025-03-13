@@ -12,8 +12,9 @@ export default {
   },
   methods: {
     registerUser() {
-      registerUser(this.user)
+      registerUser(this.user);
       console.log(this.user);
+      this.$router.push('/LoginPage');
     },
   },
 };

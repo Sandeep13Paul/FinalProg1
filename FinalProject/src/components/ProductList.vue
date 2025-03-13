@@ -105,7 +105,7 @@ export default {
 
 .product-image {
   width: 100%;
-  height: 400px;
+  height: 360px;
   border-radius: 12px;
   margin-bottom: 20px;
 }

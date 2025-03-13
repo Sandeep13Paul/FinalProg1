@@ -3,13 +3,8 @@ export default {
   data() {
     return {
       searchQuery: '',
-      isLoggedIn: localStorage.getItem("userDetails") !== null
+      isLoggedIn: false,
     };
-  },
-  watch: {
-    isLoggedIn(newValue) {
-      console.log('Login status changed:', newValue);
-    }
   },
   mounted() {
     window.addEventListener('storage', () => {
@@ -18,6 +13,22 @@ export default {
 
     this.isLoggedIn = localStorage.getItem("userDetails") !== null;
   },
+  watch: {
+    searchQuery() {
+      if (this.searchQuery.length === 0) {
+        this.$router.push('/');
+      }
+    },
+    isLoggedIn() {
+      if (localStorage.getItem("userDetails")) {
+        this.isLoggedIn = true;
+      }
+      else {
+        this.isLoggedIn = false;
+      }
+    },
+  },
+
   methods: {
     goToCart() {
       this.$router.push('/Cart');
@@ -44,6 +55,8 @@ export default {
     toggleSearch() {
       if (this.searchQuery) {
         this.$router.push(`/ProductSearchList?query=${this.searchQuery}`);
+      } else {
+        this.$router.push('/');
       }
     }
   }
@@ -64,7 +77,7 @@ export default {
           placeholder="Search"
           @keypress.enter="toggleSearch"
         />
-        <button class="search-button" @click="toggleSearch">Search</button>
+        <button class="search-button" @change="toggleSearch">Search</button>
       </li>
       <li class="navbar-item cart-profile">
         <button class="cart nav-button" @click="goToCart">Cart</button>

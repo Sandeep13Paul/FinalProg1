@@ -71,6 +71,7 @@ export default {
           <p class="product-price">${{ product.productMerchantPrice }}</p>
           <p class="product-description">{{ product.productDescription }}</p>
           <p class="product-usp">USP: {{ product.productUsp }}</p>
+          <p class="product-usp">Merchant Name: {{ product.merchantName }}</p>
         </router-link>
       </div>
     </div>
@@ -130,7 +131,7 @@ margin: 14px 0;
 
 .product-image {
 width: 100%;
-height: auto;
+height: 360px;
 border-radius: 10px;
 }
 .product-link {
