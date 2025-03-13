@@ -1,27 +1,22 @@
 <script>
 import OrderList from './OrderList.vue';
- 
+import { getUserDetails } from '../Api.js';
 export default {
   data() {
     return {
-      profile: {
-        email: "",
-        name:"",
-        address: '123 Vintage St, Springfield, IL',
-        phone: '(123) 456-7890'
-      }
+      profile: [],
+      address: "13th cross road HSR Layout",
+      phone: "9876543210",
     };
   },
   components: {
     OrderList
   },
-  methods:{
-    updateProfile(){
-     const data = localStorage.getItem("userDetails");
-     profile.email = data.profile.email
-     profile.name = data.profile.name
-    }
-     
+
+  async mounted() {
+    const userDetails = localStorage.getItem("userDetails");
+    this.profile = await getUserDetails(userDetails.userId);
+    console.log(this.profile);
   }
 };
 </script>
