@@ -87,18 +87,19 @@ export const getProductById = async (id) => {
   }
 };
 
-export const addToCart = async (userId, product) => {
+export const addToCartItem = async (userId, product, productMerchantId, productPrice, merchantName) => {
   try {
-    const response = await fetch(`http://10.20.5.3:8080/cart/addToCart/${userId}`, {
+    const response = await fetch(`http://10.20.2.65:8080/Cart/addToCart/${userId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+         'Authorization': 'bearer' + JSON.stringify(token)
       },
       body: JSON.stringify({
-        productMerchantId: product.productMerchantId,
+        productMerchantId: productMerchantId,
         name: product.name,
-        price: product.price,
-        merchantName: product.merchantName,
+        merchantName: merchantName,
+        price: productPrice,
         quantity: 1,
       }),
     });
@@ -178,5 +179,32 @@ export const registerUser = async (details) => {
 
   } catch (error) {
     console.error("Error in registering user " + error);
+  }
+}
+
+export const getProfileById = async (userId) => {
+  try {
+    const response = await fetch(`http://10.20.5.3:8080/user/getUserById/${userId}`);
+    const data = await response.json();
+    console.log("get profile data", data.data);
+    return data.data || []; 
+
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+}
+
+export const getProductMerchantId = async (productId, merchantId) => {
+  try {
+    const response = await fetch(`http://10.20.2.65/Products/getProductMerchantId/${productId}/${merchantId}`);
+    const data = await response.json();
+    console.log("get product merchant id", data.data);
+    return data.data || []; 
+
+
+  } catch (e) {
+    console.log(e);
+    return [];
   }
 }

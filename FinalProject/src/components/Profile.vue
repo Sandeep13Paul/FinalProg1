@@ -5,8 +5,8 @@ export default {
   data() {
     return {
       profile: {
-        email: 'priyanshu@12121',
-        name:"Priyanshu",
+        email: "",
+        name:"",
         address: '123 Vintage St, Springfield, IL',
         phone: '(123) 456-7890'
       }
@@ -14,6 +14,14 @@ export default {
   },
   components: {
     OrderList
+  },
+  methods:{
+    updateProfile(){
+     const data = localStorage.getItem("userDetails");
+     profile.email = data.profile.email
+     profile.name = data.profile.name
+    }
+     
   }
 };
 </script>

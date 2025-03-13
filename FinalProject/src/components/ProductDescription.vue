@@ -1,5 +1,5 @@
 <script>
-import { getProductById, getProducts } from '../Api.js';
+import { getProductById, getProducts, addToCartItem, getProductMerchantId } from '../Api.js';
 import { useCartStore } from '../pinia/cartPinia.js';
 
 export default {
@@ -9,8 +9,9 @@ export default {
       product: null,
       cart: useCartStore(),
       productPrice: 0,
-      merchantName: "",  
-      merchantId: "",    
+      merchantName: "",
+      merchantId: "",
+      selectedMerchant: null,
     };
   },
   created() {
@@ -34,26 +35,37 @@ export default {
         console.error("Error fetching product details:", error);
       }
     },
-   
-    addToCart(product, productPrice, merchantName, merchantId) {
-      console.log('Adding product to cart:', product);
-      console.log("Merchant Name:", merchantName);
-      console.log("Merchant ID:", merchantId);
-      this.cart.addToCart(product, 1, productPrice, merchantName, merchantId);
-      
+
+    async addToCart(product) {
+      console.log('Adding product to cart:', this.product);
+      console.log("Merchant Name:", this.merchantName);
+      console.log("Merchant ID:", this.merchantId);
+      // this.cart.addToCart(product, 1, productPrice, merchantName, merchantId);
+      const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
+      const productMerchantId = await getProductMerchantId(this.product.id, this.merchantId);
+      console.log(productMerchantId);
+      console.log("User Details:", userDetails);
+      const flag = await addToCartItem(userDetails.userId, this.product, this.productMerchantId, this.productPrice, this.merchantName,userDetails.jwtToken)
+      console.log(flag);
     },
 
-    updateMerchantInfo(event) {
-      const selectedPrice = parseFloat(event.target.value);
-   
-      const selectedMerchant = this.product.merchantList.find(
-        merchant => merchant.price === selectedPrice
-      );
+    updateMerchantInfo() {
+      console.log("Merchant Name:", this.productPrice);
+      // const selectedPrice = parseFloat(this.productPrice);
 
-      if (selectedMerchant) {
-        this.merchantName = selectedMerchant.name;
-        this.merchantId = selectedMerchant.id;
+      // const selectedMerchant = this.product.merchantList.find(
+      //   merchant => merchant.price === selectedPrice
+      // );
+
+      if (this.selectedMerchant) {
+        console.log(this.selectedMerchant);
+        
+        this.merchantName = this.selectedMerchant.merchantName;        ;
+        this.merchantId = this.selectedMerchant.merchantId;
       }
+      console.log(this.merchantName, this.merchantId, "updated");
+
     }
   }
 };
@@ -76,9 +88,15 @@ export default {
 
         <!-- Dropdown Select with Class -->
         <div class="merchant-select-container">
-          <select v-model="productPrice" @change="updateMerchantInfo" class="merchant-select">
+          <!-- <select v-model="productPrice" @change="updateMerchantInfo" class="merchant-select">
             <option value="" disabled>Select Merchant</option>
             <option v-for="merchant in product.merchantList" :key="merchant.id" :value="merchant.price">
+              {{ merchant.merchantName }} - ${{ merchant.price }}
+            </option>
+          </select> -->
+          <select v-model="selectedMerchant" @change="updateMerchantInfo" class="merchant-select">
+            <option value="" disabled>Select Merchant</option>
+            <option v-for="merchant in product.merchantList" :key="merchant.id" :value="merchant">
               {{ merchant.merchantName }} - ${{ merchant.price }}
             </option>
           </select>
@@ -89,7 +107,7 @@ export default {
         </button>
       </div>
     </div>
-    
+
     <div v-else class="not-found">
       <p>Product not found</p>
     </div>
@@ -128,7 +146,8 @@ export default {
   padding: 40px;
   max-width: 1000px;
   width: 100%;
-  height: 450px; /* Increased height */
+  height: 450px;
+  /* Increased height */
   gap: 50px;
   align-items: center;
 }
@@ -221,7 +240,8 @@ export default {
 }
 
 /* Hover and Focus Effects for Dropdown */
-.merchant-select:hover, .merchant-select:focus {
+.merchant-select:hover,
+.merchant-select:focus {
   border-color: #ff7e5f;
   box-shadow: 0 4px 8px rgba(255, 126, 95, 0.3);
 }
