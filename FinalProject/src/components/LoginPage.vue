@@ -1,6 +1,7 @@
 
 <script>
 import {loginUser} from '../Api.js'
+import { toast } from "vue3-toastify"
 export default {
     data() {
       return {
@@ -20,15 +21,32 @@ export default {
             jwtToken: userDetails.jwtToken,
             userId: userDetails.userId
           };
-            localStorage.setItem('userDetails', JSON.stringify(dataToStore));
+          localStorage.setItem('userDetails', JSON.stringify(dataToStore));
             const storedData = localStorage.getItem('userDetails');
             console.log('Stored data in localStorage:', storedData);
             this.$router.push('/');
-          } else {
+            
+          }
+            
+           else {
             console.log('No data returned from API');
+            toast("Invalid email or password!", {
+              "theme": "colored",
+             "type": "error",
+              "position": "top-center",
+              "autoClose": 2000,
+              "dangerouslyHTMLString": true
+            })
           }
         } catch (e) {
           console.error('Login error:', e);
+          toast("Invalid email or password!", {
+              "theme": "colored",
+              "type": "error",
+              "position": "top-center",
+              "autoClose": 2000,
+              "dangerouslyHTMLString": true
+            })
         }
       }
     }

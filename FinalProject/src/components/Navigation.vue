@@ -1,4 +1,5 @@
 <script>
+import { toast } from "vue3-toastify"
 export default {
   data() {
     return {
@@ -46,6 +47,14 @@ export default {
     },
     goToLogout()
     {
+      
+      toast("Logout from your account", {
+        "theme": "colored",
+        "type": "info",
+        "position": "top-center",
+        "autoClose": 2000,
+        "dangerouslyHTMLString": true
+      })
       localStorage.removeItem('userDetails');
       this.$router.push('/');
     },
