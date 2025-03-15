@@ -19,7 +19,8 @@ export default {
 
 .thank-you-container {
   font-family: 'Arial', sans-serif;
-  background-color: #EAE0C8; 
+  /* background-color: #EAE0C8;  */
+  background: linear-gradient(to right, #c9d6ff, #e2e2e2);
   height: 94vh;
   display: flex;
   justify-content: center;

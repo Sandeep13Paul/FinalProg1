@@ -23,7 +23,8 @@ export default {
 
 body {
   padding-top: 60px;
-  background-color: #EAE0C8;
+  /* background-color: #EAE0C8; */
+  background: linear-gradient(to right, #c9d6ff, #e2e2e2);
 }
 
 

@@ -82,7 +82,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
 .product-search-list {
-background-color: #eadcbb;
+/* background-color: #eadcbb; */
+background: linear-gradient(to right, #c9d6ff, #e2e2e2);
 color: #536878;
 padding: 40px;
 border-radius: 10px;
@@ -106,10 +107,13 @@ display: grid;
 grid-template-columns: repeat(4, 1fr);
 gap: 50px;
 justify-content: center;
+
 }
 
 .product-card {
-background-color: #536878;
+/* background-color: #536878; */
+background-color: #171a20;
+opacity: .9;
 color: #C2B280;
 padding: 30px;
 border-radius: 15px;

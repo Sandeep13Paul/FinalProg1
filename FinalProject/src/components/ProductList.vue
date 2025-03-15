@@ -45,7 +45,11 @@ export default {
 .product-list {
   padding: 50px;
   text-align: center;
-  background-color: #EAE0C8;
+  /* background-color: #EAE0C8; */
+  /* background: linear-gradient(to right, #c9d6ff, #e2e2e2); */
+  /* background: linear-gradient(to right, #1c92d2, #f2fcfe); */
+  /* background: linear-gradient(to right, #44a08d, #093637); */
+  background: linear-gradient(to right, #c9d6ff, #e2e2e2);
   font-family: 'Inter', sans-serif;
 }
 .prductlisttillte{
@@ -71,7 +75,10 @@ export default {
   padding: 30px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   text-align: left;
-  background-color: #536878;
+  /* background-color: #536878; */
+  background-color: #171a20;
+  opacity: .9;
+  /* background-color: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); */
   color: #EAE0C8;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

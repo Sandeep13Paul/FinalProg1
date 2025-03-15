@@ -49,7 +49,7 @@ export default {
     <h1 class="page-heading">Your Orders</h1>
  
     <div v-for="order in orders" class="order" :key="order.id">
-      <h2 class="order-title">Order ID: {{ order.id }}</h2>
+      <p class="order-title">Order ID: <span class="idorder">{{ order.id }}</span> </p>
  
       <!-- Product Items -->
       <div class="product-items">
@@ -75,6 +75,7 @@ export default {
 .order-page {
   font-family: 'Arial', sans-serif;
   padding: 20px;
+  
 }
  
 .page-heading {
@@ -92,9 +93,12 @@ export default {
 }
  
 .order-title {
-  font-size: 1.8em;
+  /* font-size: 1.8em; */
   margin-bottom: 10px;
-  color: rgb(0, 0, 0);
+  color: rgb(253, 252, 252);
+}
+.idorder{
+  color: rgb(148, 134, 2);
 }
  
 .produtname {

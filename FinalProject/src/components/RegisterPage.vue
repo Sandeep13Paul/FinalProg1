@@ -60,11 +60,14 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 90vh;
-  background-color: #EAE0C8;
+  /* background-color: #EAE0C8; */
+  background: linear-gradient(to right, #c9d6ff, #e2e2e2);
 }
 
 .register-card {
-  background-color: #536878;
+  /* background-color: #536878; */
+  background-color: #171a20;
+  opacity: .9;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 30px;
@@ -75,7 +78,7 @@ export default {
 
 .register-title {
   font-size: 2rem;
-  color: #1f1e1e;
+  color: #ffffff;
   margin-bottom: 20px;
 }
 

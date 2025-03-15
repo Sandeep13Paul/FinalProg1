@@ -53,12 +53,15 @@ export default {
   width: 100%;
   max-width: 1800px;
   padding: 20px;
-  background-color: #EAE0C8; /* Beige background */
+  /* background-color: #EAE0C8; Beige background */
+  background: linear-gradient(to right, #c9d6ff, #e2e2e2);
 }
  
 /* Profile Container */
 .profile-container {
-  background-color: #536878; /* Profile card background */
+  /* background-color: #536878; Profile card background */
+  background-color: #171a20;
+  opacity: .9;
   color: #000000;
   padding: 30px;
   border-radius: 8px;
@@ -105,7 +108,9 @@ export default {
  
 /* Order Container */
 .order-container {
-  background-color: #536878; /* Blue background for the order card */
+  /* background-color: #536878; Blue background for the order card */
+  background-color: #171a20;
+  opacity: .9;
   color: #ffffff;
   padding: 20px;
   border-radius: 8px;

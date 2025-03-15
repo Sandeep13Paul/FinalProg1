@@ -22,6 +22,7 @@ export default {
       ]
     };
   },
+  mounted() {},
   created() {
     const productId = this.$route.params.productId;
     if (productId) {
@@ -48,7 +49,11 @@ export default {
                 merchantName: merchantName,
               })
             }
- 
+            if (this.merchantList.length > 0) {
+              this.selectedMerchant = this.merchantList[0];
+          
+             }
+
             console.log("Merchant List:", this.merchantList);
     } catch (error) {
         console.error("Error fetching product details:", error);
@@ -61,8 +66,21 @@ export default {
       console.log("Merchant ID:", this.merchantId);
       // this.cart.addToCart(product, 1, productPrice, merchantName, merchantId);
       const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-
-      const productMerchantId = await getProductMerchantId(this.product[0].productId, this.merchantId);
+      if(!userDetails){
+        console.log("add not to cart");
+        
+       
+        toast("Login to add to cart", {
+        "theme": "colored",
+        "type": "warning",
+        "position": "top-center",
+        "autoClose": 2000,
+        "dangerouslyHTMLString": true
+      })
+      //this.$router.push('/LoginPage');
+      }
+      else{
+        const productMerchantId = await getProductMerchantId(this.product[0].productId, this.merchantId);
       console.log(productMerchantId);
       console.log("User Details:", userDetails);
       const flag = await addToCartItem(userDetails.userId, this.product[0], productMerchantId, this.productPrice, this.merchantName, userDetails.jwtToken)
@@ -87,6 +105,10 @@ export default {
               dangerouslyHTMLString: true
             });
      }
+
+      }
+
+      
  
     },
 
@@ -139,6 +161,8 @@ export default {
               {{ merchant.merchantName }} - ${{ merchant.productMerchantPrice }}
             </option>
           </select>
+
+    
         </div>
 
         <button @click="addToCart(product, productPrice, merchantName, merchantId)" class="add-to-cart-button">
@@ -163,7 +187,8 @@ export default {
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
-  background-color: #EAE0C8;
+  /* background-color: #EAE0C8; */
+  background: linear-gradient(to right, #c9d6ff, #e2e2e2);
   padding: 60px 20px;
   font-family: 'Inter', sans-serif;
 }
@@ -179,7 +204,9 @@ export default {
 .product-card {
   display: flex;
   flex-direction: row;
-  background-color: #536878;
+  /* background-color: #536878; */
+  background-color: #171a20;
+  opacity: .9;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   padding: 40px;
@@ -225,14 +252,14 @@ export default {
 
 .product-description-text {
   font-size: 1.1rem;
-  color: #000000;
+  color: #ffffff;
   margin-bottom: 18px;
   line-height: 1.6;
 }
 
 .product-usp {
   font-style: italic;
-  color: #000000;
+  color: #ffffff;
   margin-bottom: 25px;
 }
 

@@ -77,7 +77,7 @@ export default {
           placeholder="Search"
           @keypress.enter="toggleSearch"
         />
-        <button class="search-button" @change="toggleSearch">Search</button>
+        <button class="search-button" @click="toggleSearch">Search</button>
       </li>
       <li class="navbar-item cart-profile">
         <button class="cart nav-button" @click="goToCart">Cart</button>
@@ -94,7 +94,10 @@ export default {
 
 <style scoped>
 .navbar {
-  background: linear-gradient(135deg, #2C2C2C, #333333);
+  /* background: linear-gradient(135deg, #2C2C2C, #333333); */
+  /* background: linear-gradient(135deg, #92bcd7a8, #7cacbc); */
+  background-color: #171a20;
+  /* background: linear-gradient(135deg, #536878, #171a20); */
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
