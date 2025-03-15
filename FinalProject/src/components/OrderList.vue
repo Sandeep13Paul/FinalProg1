@@ -35,6 +35,7 @@ export default {
       console.log(userDetails);
       
       this.orders = await getOrder(userDetails.userId, userDetails.jwtToken);
+      this.orders.reverse();
       console.log(this.orders);
       
     } catch (error) {
