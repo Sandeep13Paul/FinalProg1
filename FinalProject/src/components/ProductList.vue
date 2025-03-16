@@ -1,5 +1,7 @@
 <script>
 import { getProducts } from '../Api.js';
+import { useRoute, useRouter } from "vue-router";
+import { toast } from "vue3-toastify"
 export default {
   data() {
     return {
@@ -11,6 +13,20 @@ export default {
   //   console.log(this.products)
   // }
   async mounted() {
+    const route = useRoute();
+    const router = useRouter();
+    if (route.query.success === "true") {
+      toast("You have been Logged in Successfully 🎉", {
+        theme: "colored",
+        type: "success",
+        position: "top-center",
+        autoClose: 2500,
+        dangerouslyHTMLString: true
+      });
+      setTimeout(() => {
+        router.replace({ path: route.path, query: {} });
+      }, 2600)
+    }
     try {
       this.products = await getProducts();  // Await the promise and assign to products
     } catch (error) {
@@ -39,7 +55,6 @@ export default {
 </template>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
 .product-list {
@@ -52,7 +67,8 @@ export default {
   background: linear-gradient(to right, #c9d6ff, #e2e2e2);
   font-family: 'Inter', sans-serif;
 }
-.prductlisttillte{
+
+.prductlisttillte {
   font-size: 2.8rem;
   color: #333;
   font-weight: 700;
@@ -112,7 +128,7 @@ export default {
 
 .product-image {
   width: 100%;
-  height: 360px;
+  height: 300px;
   border-radius: 12px;
   margin-bottom: 20px;
 }
@@ -121,5 +137,4 @@ export default {
 .product-link {
   text-decoration: none;
 }
-
 </style>

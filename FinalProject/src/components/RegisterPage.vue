@@ -1,5 +1,7 @@
 <script>
 import { registerUser } from "../Api.js"
+import { toast } from "vue3-toastify"
+
 export default {
   data() {
     return {
@@ -14,7 +16,7 @@ export default {
     registerUser() {
       registerUser(this.user);
       console.log(this.user);
-      this.$router.push('/LoginPage');
+        this.$router.push('/LoginPage?success=true');
     },
   },
 };

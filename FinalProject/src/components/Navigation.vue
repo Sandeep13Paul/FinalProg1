@@ -8,11 +8,11 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener('storage', () => {
-      this.isLoggedIn = localStorage.getItem("userDetails") !== null;
-    });
+    this.checkLoginStatus();
 
-    this.isLoggedIn = localStorage.getItem("userDetails") !== null;
+    window.addEventListener("storage", this.checkLoginStatus);
+
+    window.addEventListener("custom-login-event", this.checkLoginStatus);
   },
   watch: {
     searchQuery() {
@@ -31,24 +31,24 @@ export default {
   },
 
   methods: {
+    checkLoginStatus() {
+      this.isLoggedIn = localStorage.getItem("userDetails") !== null;
+    },
     goToCart() {
       this.$router.push('/Cart');
     },
     goToProfile() {
       this.$router.push('/Profile');
     },
-    goToLogin()
-    {
+    goToLogin() {
       this.$router.push('/LoginPage');
     },
-    goToRegister()
-    {
+    goToRegister() {
       this.$router.push('/RegisterPage');
     },
-    goToLogout()
-    {
-      
-      toast("Logout from your account", {
+    goToLogout() {
+
+      toast("Logged Out Successfully from your account", {
         "theme": "colored",
         "type": "info",
         "position": "top-center",
@@ -56,6 +56,7 @@ export default {
         "dangerouslyHTMLString": true
       })
       localStorage.removeItem('userDetails');
+      window.dispatchEvent(new Event("custom-login-event"));
       this.$router.push('/');
     },
     homePage() {
@@ -76,23 +77,18 @@ export default {
   <nav class="navbar">
     <ul class="navbar-list">
       <li class="navbar-item logo">
-          <img src="../assets/image.png" alt="LOGO" class="nav-button logo-img" @click="homePage"/>
+        <img src="../assets/image.png" alt="LOGO" class="nav-button logo-img" @click="homePage" />
       </li>
       <li class="navbar-item search-container">
-        <input
-          type="text"
-          class="search-input"
-          v-model="searchQuery"
-          placeholder="Search"
-          @keypress.enter="toggleSearch"
-        />
+        <input type="text" class="search-input" v-model="searchQuery" placeholder="Search"
+          @keypress.enter="toggleSearch" />
         <button class="search-button" @click="toggleSearch">Search</button>
       </li>
       <li class="navbar-item cart-profile">
         <button class="cart nav-button" @click="goToCart">Cart</button>
 
-        
-        <button class="profile nav-button"  @click=goToLogin v-if="!isLoggedIn">Login</button>
+
+        <button class="profile nav-button" @click=goToLogin v-if="!isLoggedIn">Login</button>
         <button class="profile nav-button" @click="goToRegister" v-if="!isLoggedIn">Register</button>
         <button class="profile nav-button" @click="goToProfile" v-if="isLoggedIn">Profile</button>
         <button class="profile nav-button" @click="goToLogout" v-if="isLoggedIn">Logout</button>
@@ -132,14 +128,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;  
+  height: 40px;
   width: auto;
 }
 
 .logo-img {
-  width: 100%;  
-  height: auto; 
-  max-width: 50px; 
+  width: 100%;
+  height: auto;
+  max-width: 50px;
 }
 
 .nav-button {
@@ -167,7 +163,7 @@ export default {
 }
 
 .search-input {
-  margin-top:20px ;
+  margin-top: 20px;
   padding: 8px 15px;
   font-size: 16px;
   border-radius: 25px;

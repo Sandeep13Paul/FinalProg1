@@ -135,7 +135,7 @@ margin: 14px 0;
 
 .product-image {
 width: 100%;
-height: 360px;
+height: 300px;
 border-radius: 10px;
 }
 .product-link {
