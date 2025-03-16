@@ -47,24 +47,18 @@ export default {
       this.$router.push('/RegisterPage');
     },
     goToLogout() {
-
-      toast("Logged Out Successfully from your account", {
-        "theme": "colored",
-        "type": "info",
-        "position": "top-center",
-        "autoClose": 2000,
-        "dangerouslyHTMLString": true
-      })
       localStorage.removeItem('userDetails');
       window.dispatchEvent(new Event("custom-login-event"));
-      this.$router.push('/');
+      this.$router.push('/?success=false');
     },
     homePage() {
       this.$router.push('/');
     },
     toggleSearch() {
       if (this.searchQuery) {
-        this.$router.push(`/ProductSearchList?query=${this.searchQuery}`);
+        const newSearchQuery = this.searchQuery;
+        // this.searchQuery = ' ';
+        this.$router.push(`/ProductSearchList?query=${newSearchQuery}`);
       } else {
         this.$router.push('/');
       }

@@ -51,7 +51,8 @@ export default {
             }
             if (this.merchantList.length > 0) {
               this.selectedMerchant = this.merchantList[0];
-          
+              this.merchantName = this.selectedMerchant.merchantName;
+              this.merchantId = this.selectedMerchant.id;
              }
 
             console.log("Merchant List:", this.merchantList);

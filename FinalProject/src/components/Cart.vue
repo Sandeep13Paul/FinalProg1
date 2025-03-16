@@ -27,9 +27,15 @@ export default {
       this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
     },
     async decreaseQuantity(item, flag) {
+      if (item.quantity === 1) {
+        //
+        console.log("hello");
+      }
+      else {
       const userDetails = JSON.parse(localStorage.getItem('userDetails'));
       const quantity = await updateCartQuantity(item, flag, userDetails.userId, userDetails.jwtToken);
       this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
+      }
     },
     removeItem(productMerchantId) {
       const userDetails = JSON.parse(localStorage.getItem('userDetails'));

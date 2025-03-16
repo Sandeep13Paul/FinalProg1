@@ -15,17 +15,29 @@ export default {
   async mounted() {
     const route = useRoute();
     const router = useRouter();
-    if (route.query.success === "true") {
+    if (route.query.success === 'true') {
       toast("You have been Logged in Successfully 🎉", {
         theme: "colored",
         type: "success",
         position: "top-center",
-        autoClose: 2500,
+        autoClose: 1800,
         dangerouslyHTMLString: true
       });
       setTimeout(() => {
         router.replace({ path: route.path, query: {} });
-      }, 2600)
+      }, 2000)
+    }
+    else if (route.query.success === 'false') {
+      toast("Logged Out Successfully from your account", {
+        "theme": "colored",
+        "type": "info",
+        "position": "top-center",
+        "autoClose": 1800,
+        "dangerouslyHTMLString": true
+      });
+      setTimeout(() => {
+        router.replace({ path: route.path, query: {} });
+      }, 2000)
     }
     try {
       this.products = await getProducts();  // Await the promise and assign to products
