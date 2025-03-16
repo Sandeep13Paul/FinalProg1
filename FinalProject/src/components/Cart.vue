@@ -119,7 +119,7 @@ export default {
         </div>
       </div>
       <div class="total-price">
-        <h3>Total Price: ${{ getTotalPrice() }}</h3>
+        <h3>Total Price: ${{ getTotalPrice().toFixed(2) }}</h3>
       </div>
       <button class="checkout" @click="checkoutButton">Proceed to Checkout</button>
     </div>

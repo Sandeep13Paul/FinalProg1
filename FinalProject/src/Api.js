@@ -358,3 +358,43 @@ export const getProducts = async () => {
       console.error(error);
     }
   }
+
+  export const getUserLoggedOut = async () => {
+    try {
+
+      const response = await fetch(`http://localhost:8080/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      // const datas = response.json();
+      console.log(response);
+      return response;
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  export const getProductStocks = async (productMerchantId) => {
+    try {
+
+      const response = await fetch(`http://localhost:8080/Products/getStock/${productMerchantId}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const datas = await response.json();
+      console.log(datas.data);
+      return datas.data;
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }

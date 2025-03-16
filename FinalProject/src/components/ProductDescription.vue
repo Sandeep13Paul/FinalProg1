@@ -1,5 +1,5 @@
 <script>
-import { getProductById, getProducts, addToCartItem, getProductMerchantId } from '../Api.js';
+import { getProductById, getProductStocks, addToCartItem, getProductMerchantId } from '../Api.js';
 import { useCartStore } from '../pinia/cartPinia.js';
 import { toast } from "vue3-toastify"
 
@@ -22,7 +22,7 @@ export default {
       ]
     };
   },
-  mounted() {},
+  mounted() { },
   created() {
     const productId = this.$route.params.productId;
     if (productId) {
@@ -31,35 +31,35 @@ export default {
   },
   methods: {
     async fetchProductDetails(id) {
-    try {
+      try {
         this.product = await getProductById(id);
         console.log("Product Data:", this.product);
- 
-            const productDetails = this.product;
-            this.productPrice = productDetails[0].productMerchantPrice;
- 
-            for (let product of productDetails) {
-              console.log("Product" + product);
-              const merchantName = product.merchantName;
-              const merchantId = product.merchantId;
-              const merchantPrice = product.productMerchantPrice;
-              this.merchantList.push({
-                id: merchantId,
-                productMerchantPrice: merchantPrice,
-                merchantName: merchantName,
-              })
-            }
-            if (this.merchantList.length > 0) {
-              this.selectedMerchant = this.merchantList[0];
-              this.merchantName = this.selectedMerchant.merchantName;
-              this.merchantId = this.selectedMerchant.id;
-             }
 
-            console.log("Merchant List:", this.merchantList);
-    } catch (error) {
+        const productDetails = this.product;
+        this.productPrice = productDetails[0].productMerchantPrice;
+
+        for (let product of productDetails) {
+          console.log("Product" + product);
+          const merchantName = product.merchantName;
+          const merchantId = product.merchantId;
+          const merchantPrice = product.productMerchantPrice;
+          this.merchantList.push({
+            id: merchantId,
+            productMerchantPrice: merchantPrice,
+            merchantName: merchantName,
+          })
+        }
+        if (this.merchantList.length > 0) {
+          this.selectedMerchant = this.merchantList[0];
+          this.merchantName = this.selectedMerchant.merchantName;
+          this.merchantId = this.selectedMerchant.id;
+        }
+
+        console.log("Merchant List:", this.merchantList);
+      } catch (error) {
         console.error("Error fetching product details:", error);
-    }
-},
+      }
+    },
 
     async addToCart() {
       console.log('Adding product to cart:', this.product);
@@ -67,50 +67,58 @@ export default {
       console.log("Merchant ID:", this.merchantId);
       // this.cart.addToCart(product, 1, productPrice, merchantName, merchantId);
       const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-      if(!userDetails){
+      if (!userDetails) {
         console.log("add not to cart");
-        
-       
+
+
         toast("Login to add to cart", {
-        "theme": "colored",
-        "type": "warning",
-        "position": "top-center",
-        "autoClose": 2000,
-        "dangerouslyHTMLString": true
-      })
-      //this.$router.push('/LoginPage');
+          "theme": "colored",
+          "type": "warning",
+          "position": "top-center",
+          "autoClose": 2000,
+          "dangerouslyHTMLString": true
+        })
+        //this.$router.push('/LoginPage');
       }
-      else{
+      else {
         const productMerchantId = await getProductMerchantId(this.product[0].productId, this.merchantId);
-      console.log(productMerchantId);
-      console.log("User Details:", userDetails);
-      const flag = await addToCartItem(userDetails.userId, this.product[0], productMerchantId, this.productPrice, this.merchantName, userDetails.jwtToken)
-      console.log(flag);
-      if(flag)
-     {
-         toast("Item added to cart", {
+        console.log(productMerchantId);
+        console.log("User Details:", userDetails);
+        const stocks = await getProductStocks(productMerchantId);
+        console.log(stocks);
+        if (stocks === 0) {
+          toast("Item Out of Stock", {
+            theme: "colored",
+            type: "success",
+            position: "top-center",
+            autoClose: 2000,
+            dangerouslyHTMLString: true
+          });
+        }
+        else {
+          const flag = await addToCartItem(userDetails.userId, this.product[0], productMerchantId, this.productPrice, this.merchantName, userDetails.jwtToken)
+          console.log(flag);
+          if (flag) {
+            toast("Item added to cart", {
               theme: "colored",
               type: "success",
               position: "top-center",
               autoClose: 2000,
               dangerouslyHTMLString: true
             });
-     }
-     else
-     {
-      toast("Item Out of Stock", {
+          }
+          else {
+            toast("Item Out of Stock", {
               theme: "colored",
               type: "success",
               position: "top-center",
               autoClose: 2000,
               dangerouslyHTMLString: true
             });
-     }
+          }
+        }
 
       }
-
-      
- 
     },
 
     updateMerchantInfo() {
@@ -122,8 +130,8 @@ export default {
 
       if (this.selectedMerchant) {
         console.log(this.selectedMerchant);
-        
-        this.merchantName = this.selectedMerchant.merchantName;        
+
+        this.merchantName = this.selectedMerchant.merchantName;
         this.merchantId = this.selectedMerchant.id;
       }
       console.log(this.merchantName, this.merchantId, "updated");
@@ -163,7 +171,7 @@ export default {
             </option>
           </select>
 
-    
+
         </div>
 
         <button @click="addToCart(product, productPrice, merchantName, merchantId)" class="add-to-cart-button">

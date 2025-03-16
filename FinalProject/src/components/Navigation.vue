@@ -1,5 +1,6 @@
 <script>
 import { toast } from "vue3-toastify"
+import { getUserLoggedOut } from '../Api.js';
 export default {
   data() {
     return {
@@ -46,9 +47,11 @@ export default {
     goToRegister() {
       this.$router.push('/RegisterPage');
     },
-    goToLogout() {
+    async goToLogout() {
       localStorage.removeItem('userDetails');
       window.dispatchEvent(new Event("custom-login-event"));
+      const data = await getUserLoggedOut();
+      console.log(data);
       this.$router.push({ path: "/", query: { loggedOut: true } });
     },
     homePage() {
