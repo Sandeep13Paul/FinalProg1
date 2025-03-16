@@ -1,8 +1,8 @@
 <script>
 import { getProducts, addToOrders, getAllCartItems, updateCartQuantity, removeItemFromCart, clearCart } from '../Api.js';
-import { useCartStore } from '../pinia/cartPinia.js';
-import { useOrderStore } from '../pinia/orderPinia.js';
+import { VueLoading } from 'vue-loading-overlay';
 import { toast } from "vue3-toastify"
+import '../../node_modules/vue-loading-overlay/dist/css/index.css';
 
 export default {
   data() {
@@ -32,9 +32,9 @@ export default {
         console.log("hello");
       }
       else {
-      const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-      const quantity = await updateCartQuantity(item, flag, userDetails.userId, userDetails.jwtToken);
-      this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
+        const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        const quantity = await updateCartQuantity(item, flag, userDetails.userId, userDetails.jwtToken);
+        this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
       }
     },
     removeItem(productMerchantId) {
@@ -53,12 +53,12 @@ export default {
       }
       else {
         toast("Error in removing from cart!", {
-        "theme": "colored",
-        "type": "error",
-        "position": "top-center",
-        "autoClose": 2000,
-        "dangerouslyHTMLString": true
-      })
+          "theme": "colored",
+          "type": "error",
+          "position": "top-center",
+          "autoClose": 2000,
+          "dangerouslyHTMLString": true
+        })
       }
 
     },
@@ -70,13 +70,25 @@ export default {
       // console.log("hello ",this.cart.cartItems);
       // this.order.addOrder(this.cart.cartItems);
       // this.cart.clearCart();
+      let loader = this.$loading.show({
+      container: this.fullPage ? null : this.$refs.formContainer,
+      loader: VueLoading, // Use the custom VueLoading component
+      color: '#5b5b5b',  // Custom loader color
+      width: 60,         // Custom loader size
+      height: 60,
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',  // Custom background color
+      zIndex: 9999,      // Custom z-index
+    });
 
       const userDetails = JSON.parse(localStorage.getItem("userDetails"));
       const addOrder = await addToOrders(userDetails.userId, this.totalPrice, userDetails.jwtToken);
       const clearTheCart = await clearCart(userDetails.userId, userDetails.jwtToken);
 
       console.log(addOrder, " ", clearTheCart);
-      this.$router.push('/ThankYou');
+      setTimeout(() => {
+        loader.hide();
+        this.$router.push('/ThankYou');
+      }, 5000)
     },
   },
 };
@@ -115,7 +127,7 @@ export default {
   /* background-color: #536878; */
   background-color: #171a20;
   opacity: .9;
-  
+
   padding: 20px;
   font-family: 'Arial', sans-serif;
   border-radius: 8px;
@@ -227,7 +239,19 @@ button {
 button:hover {
   background-color: #e64833;
 }
-.elsecase{
+
+.elsecase {
   color: white;
+}
+.v-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 </style>

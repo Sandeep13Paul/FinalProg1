@@ -1,54 +1,199 @@
-<script>
-export default {
-  data() {
-    return {
-      isLoading: false, // Controls the visibility of the loader
-    };
-  },
-  methods: {
-    showLoader() {
-      this.isLoading = true; // Show the loader
-    },
-    hideLoader() {
-      this.isLoading = false; // Hide the loader
-    }
-  }
-}
-</script>
-
 <template>
-    <div v-if="isLoading" class="loader-overlay">
-      <div class="loader"></div>
-    </div>
+  <div class="loader-container" v-if="loader">
+  <div class="loader"></div>
+  </div>
   </template>
+   
+  <script>
   
- 
+  import { VueLoading } from 'vue-loading-overlay';
   
+import '../../node_modules/vue-loading-overlay/dist/css/index.css';
+   
+  export default {
+  
+    data() {
+  
+      return {
+  
+        loader: null,
+  
+        fullPage: true, // or false, depending on your use case
+  
+      };
+  
+    },
+  
+    methods: {
+  
+      showLoader() {
+  
+        this.loader = this.$loading.show({
+  
+          container: this.fullPage ? null : this.$refs.formContainer,
+  
+          canCancel: true,
+  
+          onCancel: this.onCancel,
+  
+          loader: VueLoading, // Using the custom VueLoading component
+  
+          color: '#42b983',  // Custom loader color
+  
+          width: 60,         // Custom loader size
+  
+          height: 60,
+  
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',  // Custom background color
+  
+          zIndex: 9999,      // Custom z-index
+  
+        });
+  
+      },
+  
+      onCancel() {
+  
+        console.log('Loader canceled');
+  
+      }
+  
+    }
+  
+  };
+  </script>
+   
   <style scoped>
-  .loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+  
+  .loader-container {
+  
     display: flex;
+  
     justify-content: center;
+  
     align-items: center;
-  }
   
+    position: fixed;
+  
+    top: 0;
+  
+    left: 0;
+  
+    right: 0;
+  
+    bottom: 0;
+  
+    z-index: 9999;
+  
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with slight opacity */
+  
+  }
+   
   .loader {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid #fff;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-  }
   
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    width: 40px;
+  
+    height: 20px;
+  
+    --c: no-repeat radial-gradient(farthest-side, #000 93%, #0000);
+  
+    background:
+  
+      var(--c) 0 0,
+  
+      var(--c) 50% 0;
+  
+    background-size: 8px 8px;
+  
+    position: relative;
+  
+    clip-path: inset(-200% -100% 0 0);
+  
+    animation: l6-0 1.5s linear infinite;
+  
+  }
+   
+  .loader:before {
+  
+    content: "";
+  
+    position: absolute;
+  
+    width: 8px;
+  
+    height: 12px;
+  
+    background: #000;
+  
+    left: -16px;
+  
+    top: 0;
+  
+    animation: 
+  
+      l6-1 1.5s linear infinite,
+  
+      l6-2 0.5s cubic-bezier(0, 200, .8, 200) infinite;
+  
+  }
+   
+  .loader:after {
+  
+    content: "";
+  
+    position: absolute;
+  
+    inset: 0 0 auto auto;
+  
+    width: 8px;
+  
+    height: 8px;
+  
+    border-radius: 50%;
+  
+    background: #000; 
+  
+    animation: l6-3 1.5s linear infinite;
+  
+  }
+   
+  @keyframes l6-0 {
+  
+    0%, 30%  { background-position: 0  0   , 50% 0   }
+  
+    33%     { background-position: 0  100%, 50% 0   }
+  
+    41%, 63% { background-position: 0  0   , 50% 0   }
+  
+    66%     { background-position: 0  0   , 50% 100% }
+  
+    74%, 100% { background-position: 0  0   , 50% 0   }
+  
+  }
+   
+  @keyframes l6-1 {
+  
+    90%  { transform: translateY(0) }
+  
+    95%  { transform: translateY(15px) }
+  
+    100% { transform: translateY(15px); left: calc(100% - 8px) }
+  
+  }
+   
+  @keyframes l6-2 {
+  
+    100% { top: -0.1px }
+  
+  }
+   
+  @keyframes l6-3 {
+  
+    0%, 80%, 100% { transform: translate(0) }
+  
+    90%         { transform: translate(26px) }
+  
   }
   </style>
   
+   

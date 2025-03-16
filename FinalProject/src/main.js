@@ -4,6 +4,7 @@ import router from './routes';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import ToastPlugin from 'vue-toast-notification';
+import {LoadingPlugin} from 'vue-loading-overlay';
 
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 
@@ -15,6 +16,6 @@ pinia.use(piniaPluginPersistedstate);
  
 app.use(pinia);
 app.use(router);
-
+app.use(LoadingPlugin);
 app.mount('#app')
 app.use(ToastPlugin);
