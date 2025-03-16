@@ -49,7 +49,7 @@ export default {
     goToLogout() {
       localStorage.removeItem('userDetails');
       window.dispatchEvent(new Event("custom-login-event"));
-      this.$router.push('/?success=false');
+      this.$router.push({ path: "/", query: { loggedOut: true } });
     },
     homePage() {
       this.$router.push('/');

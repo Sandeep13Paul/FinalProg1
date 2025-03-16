@@ -12,6 +12,12 @@ export default {
   //   this.products = getProducts();
   //   console.log(this.products)
   // }
+  watch: {
+    $route() {
+      // Check whenever route changes
+      this.showLogoutToast();
+    }
+  },
   async mounted() {
     const route = useRoute();
     const router = useRouter();
@@ -27,7 +33,7 @@ export default {
         router.replace({ path: route.path, query: {} });
       }, 2000)
     }
-    else if (route.query.success === 'false') {
+    else if (route.query.loggedOut === 'true') {
       toast("Logged Out Successfully from your account", {
         "theme": "colored",
         "type": "info",
@@ -40,9 +46,27 @@ export default {
       }, 2000)
     }
     try {
-      this.products = await getProducts();  // Await the promise and assign to products
+      this.products = await getProducts();
     } catch (error) {
       console.error('Error fetching products:', error);
+    }
+  },
+  methods: {
+    showLogoutToast() {
+      if (this.$route.path === "/" && this.$route.query.loggedOut) {
+        toast("Logged Out Successfully", {
+          theme: "colored",
+          type: "info",
+          position: "top-center",
+          autoClose: 2000,
+          dangerouslyHTMLString: true,
+        });
+
+        // Remove `loggedOut=true` to prevent repeated toasts
+        setTimeout(() => {
+        this.$router.replace({  query: {} });
+        }, 2000)
+      }
     }
   }
 };
