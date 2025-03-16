@@ -88,11 +88,12 @@ export const getProducts = async () => {
     // console.log("hi", productMerchantId)
     // console.log(product.imageUrl);
     
-    const response = await fetch(`http://localhost:8080/Cart/addToCart/${userId}`, {
+    const response = await fetch(`http://localhost:8080/Cart/addToCart`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        // 'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         productMerchantId: productMerchantId,
@@ -139,6 +140,7 @@ export const getProducts = async () => {
     console.log(details);
     const response = await fetch(`http://localhost:8080/auth/login`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -185,11 +187,11 @@ export const getProducts = async () => {
    
   export const getProfileById = async (userId) => {
   try {
-    const response = await fetch(`http://localhost:8080/user/getUserById/${userId}`, {
+    const response = await fetch(`http://localhost:8080/user/getUserById`, {
       method: 'GET',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
       }
     });
     const data = await response.json();
@@ -218,11 +220,12 @@ export const getProducts = async () => {
    
   export const addToOrders = async (userId, totalPrice, token) => {
   try {
-    const response = await fetch(`http://localhost:8080/Orders/addToOrderHistory/${userId}/${totalPrice}`, {
+    const response = await fetch(`http://localhost:8080/Orders/addToOrderHistory/${totalPrice}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        // 'Authorization': `Bearer ${token}`
       },
     });
     const data = await response.json();
@@ -237,11 +240,12 @@ export const getProducts = async () => {
    
   export const getAllCartItems = async (userId, token) => {
   try {
-    const response = await fetch(`http://localhost:8080/Cart/getAllCartItems/${userId}`, {
+    const response = await fetch(`http://localhost:8080/Cart/getAllCartItems`, {
       method: 'GET',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        // 'Authorization': `Bearer ${token}`
       },
     });
     const data = await response.json();
@@ -257,11 +261,12 @@ export const getProducts = async () => {
   export const updateCartQuantity = async (item, flag, userId, token) => {
   try {
     console.log("update product", item, flag, userId, token);
-    const response = await fetch(`http://localhost:8080/Cart/updateQuantity/${userId}/${item.productMerchantId}?increase=${flag}`, {
+    const response = await fetch(`http://localhost:8080/Cart/updateQuantity/${item.productMerchantId}?increase=${flag}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        // 'Authorization': `Bearer ${token}`
       },
     });
     const data = await response.json();
@@ -278,11 +283,12 @@ export const getProducts = async () => {
    
   export const removeItemFromCart = async (userId, productMerchantId, token) => {
     try {
-      const response = await fetch(`http://localhost:8080/Cart/removeFromCart/${userId}/${productMerchantId}`, {
+      const response = await fetch(`http://localhost:8080/Cart/removeFromCart/${productMerchantId}`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          // 'Authorization': `Bearer ${token}`
         },
       });
       const data = await response.json();
@@ -297,11 +303,12 @@ export const getProducts = async () => {
    
   export const clearCart = async (userId, token) => {
     try {
-      const response = await fetch(`http://localhost:8080/Cart/clearCart/${userId}`, {
+      const response = await fetch(`http://localhost:8080/Cart/clearCart`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          // 'Authorization': `Bearer ${token}`
         },
       });
       const data = await response.json();
@@ -316,11 +323,12 @@ export const getProducts = async () => {
   }
   export const getOrder = async (userId, token) => {
     try {
-      const response = await fetch(`http://localhost:8080/Orders/getAllOrders/${userId}`, {
+      const response = await fetch(`http://localhost:8080/Orders/getAllOrders`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          // 'Authorization': `Bearer ${token}`
         }
       });
       const data = await response.json();
@@ -334,11 +342,12 @@ export const getProducts = async () => {
    
   export const getUserDetails = async (userId, token) => {
     try {
-      const response = await fetch(`http://localhost:8080/home/getUserDetails/${userId}`, {
+      const response = await fetch(`http://localhost:8080/home/getUserDetails`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          // 'Authorization': `Bearer ${token}`
         },
       });
       const datas = await response.json();

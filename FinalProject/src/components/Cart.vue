@@ -14,7 +14,7 @@ export default {
   async mounted() {
     try {
       const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-      this.cartItems = await getAllCartItems(userDetails.userId, userDetails.jwtToken);  // Await the promise and assign to products
+      this.cartItems = await getAllCartItems(userDetails.userId, userDetails.jwtToken);
       console.log("cart items", this.cartItems);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -24,7 +24,18 @@ export default {
     async increaseQuantity(item, flag) {
       const userDetails = JSON.parse(localStorage.getItem('userDetails'));
       const quantity = await updateCartQuantity(item, flag, userDetails.userId, userDetails.jwtToken);
-      this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
+      if (quantity === -1) {
+        toast("Item's Stock Maximum limit reached, Cannot Add More", {
+          theme: "colored",
+          type: "success",
+          position: "top-center",
+          autoClose: 3000,
+          dangerouslyHTMLString: true
+        });
+      }
+      else {
+        this.cartItems.find(items => items.productMerchantId === item.productMerchantId).quantity = quantity;
+      }
     },
     async decreaseQuantity(item, flag) {
       if (item.quantity === 1) {
@@ -67,17 +78,14 @@ export default {
       return this.totalPrice;
     },
     async checkoutButton() {
-      // console.log("hello ",this.cart.cartItems);
-      // this.order.addOrder(this.cart.cartItems);
-      // this.cart.clearCart();
       let loader = this.$loading.show({
       container: this.fullPage ? null : this.$refs.formContainer,
-      loader: VueLoading, // Use the custom VueLoading component
-      color: '#5b5b5b',  // Custom loader color
-      width: 60,         // Custom loader size
+      loader: VueLoading, 
+      color: '#5b5b5b', 
+      width: 60,       
       height: 60,
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',  // Custom background color
-      zIndex: 9999,      // Custom z-index
+      backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+      zIndex: 9999,
     });
 
       const userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -85,10 +93,10 @@ export default {
       const clearTheCart = await clearCart(userDetails.userId, userDetails.jwtToken);
 
       console.log(addOrder, " ", clearTheCart);
-      setTimeout(() => {
+      // setTimeout(() => {
         loader.hide();
         this.$router.push('/ThankYou');
-      }, 5000)
+      // }, 5000)
     },
   },
 };

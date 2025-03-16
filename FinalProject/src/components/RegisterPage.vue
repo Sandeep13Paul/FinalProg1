@@ -48,7 +48,7 @@ export default {
         registerUser(this.user);
         console.log(this.user);
         this.$router.push('/LoginPage?success=true');
-        toast.success('Registration successful!');
+        // toast.success('Registration successful!');
       } else {
         toast.error('Please fill in all required fields.');
       }
